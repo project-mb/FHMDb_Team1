@@ -13,6 +13,7 @@ public class Movie {
     public Movie(String title, String description, String genres) {
         this.title = title;
         this.description = description;
+        this.genres = genres;
     }
 
     public String getTitle() {
