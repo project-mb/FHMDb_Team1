@@ -8,11 +8,11 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class MovieCell extends ListCell<Movie> {
     private final Label title = new Label();
     private final Label detail = new Label();
-
     private final Label genres = new Label();
     private final VBox layout = new VBox(title, detail, genres);
 
@@ -40,7 +40,7 @@ public class MovieCell extends ListCell<Movie> {
             layout.setBackground(new Background(new BackgroundFill(Color.web("#454545"), null, null)));
 
             // layout
-            title.fontProperty().set(title.getFont().font(20));
+            title.fontProperty().set(Font.font(20));
             detail.setMaxWidth(this.getScene().getWidth() - 30);
             detail.setWrapText(true);
             layout.setPadding(new Insets(10));
