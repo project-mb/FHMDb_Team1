@@ -18,13 +18,13 @@ import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
     @FXML
-    public JFXButton searchBtn;
+    public JFXButton filterBtn;
 
     @FXML
     public TextField searchField;
 
     @FXML
-    public JFXListView movieListView;
+    public JFXListView<Movie> movieListView;
 
     @FXML
     public JFXComboBox<Genre> genreComboBox;
@@ -51,6 +51,9 @@ public class HomeController implements Initializable {
 
         // TODO add event handlers to buttons and call the regarding methods
         // either set event handlers in the fxml file (onAction) or add them here
+        filterBtn.setOnAction(actionEvent -> {
+            Movie.getMoviesFiltered(searchField.getText(), genreComboBox.getValue());
+        });
 
         // Sort button example:
         sortBtn.setOnAction(actionEvent -> {
