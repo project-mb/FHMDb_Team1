@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -59,11 +60,11 @@ public class HomeController implements Initializable {
         // Sort button example:
         sortBtn.setOnAction(actionEvent -> {
             if (sortBtn.getText().equals("Sort (asc)")) {
-                // TODO sort observableMovies ascending
                 sortBtn.setText("Sort (desc)");
+                observableMovies.sort(Comparator.comparing(Movie::getTitle));
             } else {
-                // TODO sort observableMovies descending
                 sortBtn.setText("Sort (asc)");
+                observableMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
             }
         });
     }
