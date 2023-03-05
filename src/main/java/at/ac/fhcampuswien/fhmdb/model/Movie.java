@@ -1,11 +1,11 @@
-package at.ac.fhcampuswien.fhmdb.models;
+package at.ac.fhcampuswien.fhmdb.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 
-import static at.ac.fhcampuswien.fhmdb.models.Genre.*;
+import static at.ac.fhcampuswien.fhmdb.model.Genre.*;
 
 public class Movie {
     private String title;
