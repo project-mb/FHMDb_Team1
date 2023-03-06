@@ -2,6 +2,7 @@ package at.ac.fhcampuswien.fhmdb.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Movie {
     private String title;
@@ -22,6 +23,14 @@ public class Movie {
 
     public String getDescription() {
         return description;
+    }
+
+    public List<Movie> searchTitle(String title, List<Movie> movieList) {
+        return movieList.stream().filter(movie -> movie.getTitle().contains(title)).collect(Collectors.toList());
+    }
+
+    public List<Movie> searchGenre(String genre, List<Movie> movieList) {
+        return movieList.stream().filter(movie -> movie.genres.contains(genre)).collect(Collectors.toList());
     }
 
     public static List<Movie> initializeMovies(){
