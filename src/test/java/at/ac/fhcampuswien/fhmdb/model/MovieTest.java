@@ -21,5 +21,4 @@ public class MovieTest {
 
         assertTrue(expected.containsAll(actual));
     }
-    
 }

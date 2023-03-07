@@ -12,7 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -79,12 +78,7 @@ public class HomeController implements Initializable {
 
     public List<Movie> getMoviesByGenre(List<Movie> movies, Genre filter) {
         if (filter == __NONE__) return movies;
-
-        List<Movie> filteredMovies = new ArrayList<>();
-
-        for (Movie m : allMovies) { if (m.getGenres().contains(filter)) filteredMovies.add(m); }
-
-        return filteredMovies;
+        return movies.stream().filter(movie -> movie.getGenres().contains(filter)).toList();
     }
 
     //TODO (@Eduard): implement method
