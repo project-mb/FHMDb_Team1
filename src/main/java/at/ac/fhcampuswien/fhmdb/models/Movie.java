@@ -25,13 +25,13 @@ public class Movie {
         return description;
     }
 
-    public List<Movie> searchTitle(String title, List<Movie> movieList) {
-        return movieList.stream().filter(movie -> movie.getTitle().contains(title)).collect(Collectors.toList());
+    public static List<Movie> searchTitle(String title, List<Movie> movieList) {
+        return movieList.stream().filter(movie -> movie.getTitle().contains(title)).toList();
     }
 
-    public List<Movie> searchGenre(String genre, List<Movie> movieList) {
-        return movieList.stream().filter(movie -> movie.genres.contains(genre)).collect(Collectors.toList());
-    }
+    /*public static List<Movie> searchGenre(String genre, List<Movie> movieList) {
+        return movieList.stream().filter(movie -> movie.genres.contains(genre)).toList();
+    }*/
 
     public static List<Movie> initializeMovies(){
         List<Movie> movies = new ArrayList<>();
