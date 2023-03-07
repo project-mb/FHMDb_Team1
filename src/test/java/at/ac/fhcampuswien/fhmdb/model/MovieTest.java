@@ -6,9 +6,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static at.ac.fhcampuswien.fhmdb.model.Genre.ADVENTURE;
-import static at.ac.fhcampuswien.fhmdb.model.Genre.BIOGRAPHY;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static at.ac.fhcampuswien.fhmdb.model.Genre.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MovieTest {
     private final HomeController controller = new HomeController();

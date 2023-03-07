@@ -1,8 +1,12 @@
 package at.ac.fhcampuswien.fhmdb;
 
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-public class HomeControllerTest {
+import static org.junit.jupiter.api.Assertions.*;
 
+public class HomeControllerTest {
+    @Test
+    void TestTestTest() {
+        assertTrue(true);
+    }
 }
