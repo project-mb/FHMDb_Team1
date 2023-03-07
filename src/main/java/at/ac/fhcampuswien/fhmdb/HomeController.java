@@ -69,20 +69,10 @@ public class HomeController implements Initializable {
     }
 
     public List<Movie> getMoviesFiltered(String searchQuery, Genre filter) {
-        List<Movie> filteredMovies = getMoviesByGenre(allMovies, filter);
-        List<Movie> queriedMovies = getMoviesBySearchQuery(filteredMovies, searchQuery);
+        List<Movie> filteredMovies = Movie.getMoviesByGenre(allMovies, filter);
+        List<Movie> queriedMovies = Movie.getMoviesBySearchQuery(filteredMovies, searchQuery);
 
         //TODO: change for queriedMovies when getMoviesBySearchQuery is implemented
         return filteredMovies;
-    }
-
-    public List<Movie> getMoviesByGenre(List<Movie> movies, Genre filter) {
-        if (filter == __NONE__) return movies;
-        return movies.stream().filter(movie -> movie.getGenres().contains(filter)).toList();
-    }
-
-    //TODO (@Eduard): implement method
-    private List<Movie> getMoviesBySearchQuery(List<Movie> movies, String searchQuery) {
-        return null;
     }
 }
