@@ -2,6 +2,7 @@ package at.ac.fhcampuswien.fhmdb.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Movie {
@@ -29,9 +30,15 @@ public class Movie {
         return movieList.stream().filter(movie -> movie.getTitle().contains(title)).toList();
     }
 
-    /*public static List<Movie> searchGenre(String genre, List<Movie> movieList) {
-        return movieList.stream().filter(movie -> movie.genres.contains(genre)).toList();
-    }*/
+    //The following is imported from Manuel Frühstück by "Copy-Paste"
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return Objects.equals(title, movie.title) && Objects.equals(description, movie.description) && Objects.equals(genres, movie.genres);
+    }
+    //Copy end
 
     public static List<Movie> initializeMovies(){
         List<Movie> movies = new ArrayList<>();

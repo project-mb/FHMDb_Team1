@@ -5,8 +5,7 @@ import org.junit.jupiter.api.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static at.ac.fhcampuswien.fhmdb.models.Movie.initializeMovies;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MovieTest {
 
@@ -19,15 +18,17 @@ public class MovieTest {
         movies.add(new Movie("test3", "des3", "genre3"));
         String title = "test2";
         List<Movie> expected = new ArrayList<>();
+        expected.add(new Movie("test2", "des2", "genre2"));
         List<Movie> temp = Movie.searchTitle(title, movies);
-        assertEquals(temp, expected);
+        assertEquals(expected, temp);
     }
 
-    /*@Test
-    @DisplayName("Testing Genre Search")
-    void test_Genre_Search() {
-        //List<Movie> movies = initializeMovies();
-        //String genre = "ACTION";
-        //List<Movie> expected = searchGenre(genre, movies);
-    }*/
+    @Test
+    @DisplayName("Testing equals override")
+    void test_equals_override() {
+        List<Movie> temp1 = Movie.initializeMovies();
+        List<Movie> temp2 = new ArrayList<>();
+        temp2.add(new Movie("test3", "des", "genre"));
+        assertTrue(temp1.get(2).equals(temp2.get(0)));
+    }
 }
