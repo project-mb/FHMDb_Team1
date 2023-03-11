@@ -14,19 +14,19 @@ public class MovieTest {
 
     private final HomeController controller = new HomeController();
 
-    private List<at.ac.fhcampuswien.fhmdb.models.Movie> movies = new ArrayList<>(); {
-        movies.add(new at.ac.fhcampuswien.fhmdb.models.Movie("test1", "des1", "genre1"));
-        movies.add(new at.ac.fhcampuswien.fhmdb.models.Movie("test2", "des2", "genre2"));
-        movies.add(new at.ac.fhcampuswien.fhmdb.models.Movie("test3", "des3", "genre3"));
+    private List<Movie> movies = new ArrayList<>(); {
+        movies.add(new Movie("test1", "des1", ACTION));
+        movies.add(new Movie("test2", "des2", ACTION));
+        movies.add(new Movie("test3", "des3", ACTION));
     }
 
     @Test
     @DisplayName("Testing Title Search")
     void test_Title_Search() {
         String title = "test2";
-        List<at.ac.fhcampuswien.fhmdb.models.Movie> expected = new ArrayList<>();
-        expected.add(new at.ac.fhcampuswien.fhmdb.models.Movie("test2", "des2", "genre2"));
-        List<at.ac.fhcampuswien.fhmdb.models.Movie> temp = at.ac.fhcampuswien.fhmdb.models.Movie.searchTitle(title, movies);
+        List<Movie> expected = new ArrayList<>();
+        expected.add(new Movie("test2", "des2", ACTION));
+        List<Movie> temp = Movie.searchTitle(title, movies);
         assertEquals(expected, temp);
     }
 
@@ -34,7 +34,7 @@ public class MovieTest {
     @DisplayName("Testing Title Search with empty String Part 1")
     void test_Title_Search_Void_String_1() {
         String title = "";
-        List<at.ac.fhcampuswien.fhmdb.models.Movie> temp = at.ac.fhcampuswien.fhmdb.models.Movie.searchTitle(title, movies);
+        List<Movie> temp = Movie.searchTitle(title, movies);
         assertTrue(temp == movies);
     }
 
@@ -42,17 +42,16 @@ public class MovieTest {
     @DisplayName("Testing Title Search with empty String Part 2")
     void test_Title_Search_Void_String_2() {
         String title = " ";
-        List<at.ac.fhcampuswien.fhmdb.models.Movie> temp = at.ac.fhcampuswien.fhmdb.models.Movie.searchTitle(title, movies);
+        List<Movie> temp = Movie.searchTitle(title, movies);
         assertTrue(temp == movies);
     }
 
     @Test
     @DisplayName("Testing equals override")
     void test_equals_override() {
-        List<at.ac.fhcampuswien.fhmdb.models.Movie> temp1 = at.ac.fhcampuswien.fhmdb.models.Movie.initializeMovies();
-        List<at.ac.fhcampuswien.fhmdb.models.Movie> temp2 = new ArrayList<>();
-        temp2.add(new at.ac.fhcampuswien.fhmdb.models.Movie("test3", "des", "genre"));
-        assertTrue(temp2.get(0).equals(temp1.get(2)));
+        List<Movie> temp1 = new ArrayList<>();
+        temp1.add(new Movie("test3", "des3", ACTION));
+        assertTrue(temp1.get(0).equals(movies.get(2)));
     }
 
     @Test
