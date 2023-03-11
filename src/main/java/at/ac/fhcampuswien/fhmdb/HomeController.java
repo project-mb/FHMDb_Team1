@@ -35,6 +35,7 @@ public class HomeController implements Initializable {
     public JFXButton sortBtn;
 
     public List<Movie> allMovies = Movie.initializeMovies();
+    public List<Movie> filteredMovies = new ArrayList<>(allMovies);
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
 
     @Override
@@ -56,13 +57,8 @@ public class HomeController implements Initializable {
 
         // sort button
         sortBtn.setOnAction(actionEvent -> {
-            if (sortBtn.getText().equals("Sort (asc)")) {
-                sortBtn.setText("Sort (desc)");
-                observableMovies.sort(Comparator.comparing(Movie::getTitle));
-            } else {
-                sortBtn.setText("Sort (asc)");
-                observableMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
-            }
+            sort_movies();
+            observableMovies.setAll(filteredMovies);
         });
     }
 
@@ -73,4 +69,17 @@ public class HomeController implements Initializable {
         //TODO: change for queriedMovies when getMoviesBySearchQuery is implemented
         return filteredMovies;
     }
+    public void sort_movies() {
+            if (sortBtn.getText().equals("Sort (asc)")) {
+                sortBtn.setText("Sort (desc)");
+                sortAscending();
+            } else {
+                sortBtn.setText("Sort (asc)");
+                sortDescending();
+            }
+    }
+    public void sortAscending() { filteredMovies.sort(Comparator.comparing(Movie::getTitle)); }
+
+    public void sortDescending() { filteredMovies.sort(Comparator.comparing(Movie::getTitle).reversed()); }
+
 }
