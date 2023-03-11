@@ -27,6 +27,10 @@ public class Movie {
     }
 
     public static List<Movie> searchTitle(String title, List<Movie> movieList) {
+        if(Objects.equals(title, "") || Objects.equals(title, " ")) {
+            return  movieList;
+        }
+
         return movieList.stream().filter(movie -> movie.getTitle().contains(title)).toList();
     }
 
