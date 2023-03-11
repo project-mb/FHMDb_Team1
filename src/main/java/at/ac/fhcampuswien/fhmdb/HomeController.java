@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -35,6 +36,7 @@ public class HomeController implements Initializable {
     public JFXButton sortBtn;
 
     public List<Movie> allMovies = Movie.initializeMovies();
+    public List<Movie> filteredMovies = new ArrayList<>(allMovies);
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
 
     @Override
@@ -50,7 +52,9 @@ public class HomeController implements Initializable {
 
         // filter button
         filterBtn.setOnAction(actionEvent -> {
-            observableMovies.setAll(getMoviesFiltered(searchField.getText(), genreComboBox.getValue()));
+            filteredMovies = new ArrayList<>();
+            filteredMovies = getMoviesFiltered(searchField.getText(), genreComboBox.getValue());
+            observableMovies.setAll(filteredMovies);
             movieListView.setCellFactory(movieListView -> new MovieCell());
         });
 
