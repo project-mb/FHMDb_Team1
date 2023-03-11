@@ -41,14 +41,17 @@ public class Movie implements Comparable<Movie>{
         return movies.stream().filter(movie -> movie.getGenres().contains(filter)).toList();
     }
 
-    //TODO (@Eduard): implement method
-    public static List<Movie> getMoviesBySearchQuery(List<Movie> movies, String searchQuery) {
-        return null;
-    }
-
     @Override
     public int compareTo(Movie o) {
         return this.title.compareTo(o.title);
+    }
+
+    public static List<Movie> searchTitle(String title, List<Movie> movieList) {
+        if(Objects.equals(title, "") || Objects.equals(title, " ")) {
+            return movieList;
+        }
+
+        return movieList.stream().filter(movie -> movie.getTitle().contains(title)).toList();
     }
 
     @Override

@@ -67,10 +67,10 @@ public class HomeController implements Initializable {
 
     public List<Movie> getMoviesFiltered(String searchQuery, Genre filter) {
         List<Movie> filteredMovies = Movie.getMoviesByGenre(allMovies, filter);
-        List<Movie> queriedMovies = Movie.getMoviesBySearchQuery(filteredMovies, searchQuery);
+        List<Movie> queriedMovies = Movie.searchTitle(searchQuery, filteredMovies);
 
         //TODO: change for queriedMovies when getMoviesBySearchQuery is implemented
-        return filteredMovies;
+        return queriedMovies;
     }
     public void sort_movies() {
             if (sortBtn.getText().equals("Sort (asc)")) {
