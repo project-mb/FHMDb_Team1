@@ -3,7 +3,6 @@ package at.ac.fhcampuswien.fhmdb.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Movie {
     private String title;
@@ -34,7 +33,6 @@ public class Movie {
         return movieList.stream().filter(movie -> movie.getTitle().contains(title)).toList();
     }
 
-    //The following is imported from Manuel Frühstück by "Copy-Paste"
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -42,7 +40,6 @@ public class Movie {
         Movie movie = (Movie) o;
         return Objects.equals(title, movie.title) && Objects.equals(description, movie.description) && Objects.equals(genres, movie.genres);
     }
-    //Copy end
 
     public static List<Movie> initializeMovies(){
         List<Movie> movies = new ArrayList<>();
