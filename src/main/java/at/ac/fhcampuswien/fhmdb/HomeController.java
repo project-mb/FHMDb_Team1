@@ -12,11 +12,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static at.ac.fhcampuswien.fhmdb.model.Genre.__NONE__;
+import static at.ac.fhcampuswien.fhmdb.model.Genre.*;
 
 public class HomeController implements Initializable {
     @FXML
@@ -51,7 +52,9 @@ public class HomeController implements Initializable {
 
         // filter button
         filterBtn.setOnAction(actionEvent -> {
-            observableMovies.setAll(getMoviesFiltered(searchField.getText(), genreComboBox.getValue()));
+            filteredMovies = new ArrayList<>();
+            filteredMovies.addAll(getMoviesFiltered(searchField.getText(), genreComboBox.getValue()));
+            observableMovies.setAll(filteredMovies);
             movieListView.setCellFactory(movieListView -> new MovieCell());
         });
 

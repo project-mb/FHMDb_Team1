@@ -10,6 +10,8 @@ import static at.ac.fhcampuswien.fhmdb.model.Genre.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HomeControllerTest {
+    private final HomeController controller = new HomeController();
+
     @Test
     void sortAscending() {
         List<Movie> expected = new ArrayList<>();

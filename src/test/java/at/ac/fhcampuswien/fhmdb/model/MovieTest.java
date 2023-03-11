@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MovieTest {
     private final HomeController controller = new HomeController();
+
     @Test
     public void getMoviesByGenre() {
         List<Movie> expected = new ArrayList<>();
