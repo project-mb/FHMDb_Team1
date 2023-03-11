@@ -17,7 +17,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static at.ac.fhcampuswien.fhmdb.model.Genre.__NONE__;
+import static at.ac.fhcampuswien.fhmdb.model.Genre.*;
 
 public class HomeController implements Initializable {
     @FXML
@@ -53,20 +53,15 @@ public class HomeController implements Initializable {
         // filter button
         filterBtn.setOnAction(actionEvent -> {
             filteredMovies = new ArrayList<>();
-            filteredMovies = getMoviesFiltered(searchField.getText(), genreComboBox.getValue());
+            filteredMovies.addAll(getMoviesFiltered(searchField.getText(), genreComboBox.getValue()));
             observableMovies.setAll(filteredMovies);
             movieListView.setCellFactory(movieListView -> new MovieCell());
         });
 
         // sort button
         sortBtn.setOnAction(actionEvent -> {
-            if (sortBtn.getText().equals("Sort (asc)")) {
-                sortBtn.setText("Sort (desc)");
-                observableMovies.sort(Comparator.comparing(Movie::getTitle));
-            } else {
-                sortBtn.setText("Sort (asc)");
-                observableMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
-            }
+            sort_movies();
+            observableMovies.setAll(filteredMovies);
         });
     }
 
@@ -77,4 +72,17 @@ public class HomeController implements Initializable {
         //TODO: change for queriedMovies when getMoviesBySearchQuery is implemented
         return filteredMovies;
     }
+    public void sort_movies() {
+            if (sortBtn.getText().equals("Sort (asc)")) {
+                sortBtn.setText("Sort (desc)");
+                sortAscending();
+            } else {
+                sortBtn.setText("Sort (asc)");
+                sortDescending();
+            }
+    }
+    public void sortAscending() { filteredMovies.sort(Comparator.comparing(Movie::getTitle)); }
+
+    public void sortDescending() { filteredMovies.sort(Comparator.comparing(Movie::getTitle).reversed()); }
+
 }
