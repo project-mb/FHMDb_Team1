@@ -12,12 +12,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
-import static at.ac.fhcampuswien.fhmdb.model.Genre.*;
+import static at.ac.fhcampuswien.fhmdb.model.Genre.__NONE__;
 
 public class HomeController implements Initializable {
     @FXML
@@ -66,20 +63,53 @@ public class HomeController implements Initializable {
     }
 
     public List<Movie> getMoviesFiltered(String searchQuery, Genre filter) {
-        List<Movie> filteredMovies = Movie.getMoviesByGenre(allMovies, filter);
-        List<Movie> queriedMovies = Movie.searchTitle(searchQuery, filteredMovies);
-
-        //TODO: change for queriedMovies when getMoviesBySearchQuery is implemented
-        return queriedMovies;
+        List<Movie> filteredMovies = getMoviesByGenre(allMovies, filter);
+        return getMoviesByTitle(searchQuery, filteredMovies);
     }
+
+    public static List<Movie> getMoviesByGenre(List<Movie> movies, Genre filter) {
+        if (filter == __NONE__) return movies;
+        return movies.stream().filter(movie -> movie.getGenres().contains(filter)).toList();
+    }
+
+    public static List<Movie> getMoviesByTitle(String title, List<Movie> movieList) {
+        if (Objects.equals(title, "") || Objects.equals(title, " ")) {
+            return movieList;
+        }
+
+        return movieList.stream().filter(movie -> movie.getTitle().contains(title)).toList();
+    }
+
+    //TODO: Eduard
+    public static String getMostPopularActor(List<Movie> movies) {
+        return null;
+    }
+    public static int getLongestMovieTitle(List<Movie> movies) {
+        return 0;
+    }
+    public static long countMoviesFrom(List<Movie> movies, String director) {
+        return 0;
+    }
+    public static List<Movie> getMoviesBetweenYears(List<Movie> movies, int startYear, int endYear) {
+        return null;
+    }
+
+    //TODO: Manuel
+    public static List<Movie> getMoviesByReleaseYear(List<Movie> movies, int releaseYear) {
+        return null;
+    }
+    public static List<Movie> getMoviesByRating(List<Movie> movies, int rating) {
+        return null;
+    }
+
     public void sort_movies() {
-            if (sortBtn.getText().equals("Sort (asc)")) {
-                sortBtn.setText("Sort (desc)");
-                sortAscending();
-            } else {
-                sortBtn.setText("Sort (asc)");
-                sortDescending();
-            }
+        if (sortBtn.getText().equals("Sort (asc)")) {
+            sortBtn.setText("Sort (desc)");
+            sortAscending();
+        } else {
+            sortBtn.setText("Sort (asc)");
+            sortDescending();
+        }
     }
     public void sortAscending() { filteredMovies.sort(Comparator.comparing(Movie::getTitle)); }
 
