@@ -55,10 +55,12 @@ public class MovieTest {
     }
 
     @Test
-    public void getMoviesByGenre() {
+    @DisplayName("Movies filtered by genre")
+    public void getMoviesByGenre_basic() {
         List<Movie> expected = new ArrayList<>();
-        expected.add(new Movie("test2", "des2", ADVENTURE, BIOGRAPHY)); //new Movie("test2", "des2", ADVENTURE, BIOGRAPHY)
-        expected.add(new Movie("test4", "des4", ADVENTURE)); //new Movie("test4", "des4", ADVENTURE)
+        expected.add(new Movie("test2", "des2", ADVENTURE, BIOGRAPHY));
+        expected.add(new Movie("test4", "des4", ADVENTURE));
+
         List<Movie> actual = HomeController.getMoviesByGenre(controller.allMovies, ADVENTURE);
 
         assertTrue(expected.containsAll(actual));
