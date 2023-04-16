@@ -25,13 +25,13 @@ public class MovieCell extends ListCell<Movie> {
             setGraphic(null);
         } else {
             this.getStyleClass().add("movie-cell");
-            title.setText(movie.getTitle());
+            title.setText(movie.title);
             detail.setText(
-                    movie.getDescription() != null
-                            ? movie.getDescription()
+                    movie.description != null
+                            ? movie.description
                             : "No description available"
             );
-            genres.setText(movie.getGenres().toString().replaceAll("\\[|]|,", ""));
+            genres.setText(movie.genres.toString().replaceAll("\\[|]|,", ""));
 
 
             // color scheme
