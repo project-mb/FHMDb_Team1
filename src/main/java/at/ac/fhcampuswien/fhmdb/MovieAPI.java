@@ -27,6 +27,7 @@ public class MovieAPI {
         String url = urlBuilder.toString();
 
         Request request = new Request.Builder()
+                .header("User-Agent", "http.agent")
                 .url(url)
                 .build();
 
