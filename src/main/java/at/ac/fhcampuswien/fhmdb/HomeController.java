@@ -11,12 +11,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 import static at.ac.fhcampuswien.fhmdb.model.Genre.__NONE__;
 
 public class HomeController implements Initializable {
+
+    public static MovieAPI movieAPI = new MovieAPI();
+
     @FXML
     public JFXButton filterBtn;
 
@@ -82,15 +86,35 @@ public class HomeController implements Initializable {
 
     //TODO: Eduard
     public static String getMostPopularActor(List<Movie> movies) {
+        try {
+            movieAPI.get("http://prog2.fh-campuswien.ac.at/movies");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
     public static int getLongestMovieTitle(List<Movie> movies) {
+        try {
+            movieAPI.get("http://prog2.fh-campuswien.ac.at/movies");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return 0;
     }
     public static long countMoviesFrom(List<Movie> movies, String director) {
+        try {
+            movieAPI.get("http://prog2.fh-campuswien.ac.at/movies");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return 0;
     }
     public static List<Movie> getMoviesBetweenYears(List<Movie> movies, int startYear, int endYear) {
+        try {
+            movieAPI.get("http://prog2.fh-campuswien.ac.at/movies");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 
@@ -114,5 +138,4 @@ public class HomeController implements Initializable {
     public void sortAscending() { filteredMovies.sort(Comparator.comparing(Movie::getTitle)); }
 
     public void sortDescending() { filteredMovies.sort(Comparator.comparing(Movie::getTitle).reversed()); }
-
 }

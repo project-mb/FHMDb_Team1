@@ -12,16 +12,17 @@ import okhttp3.*;
 
 public class MovieAPI {
 
-    public List<Movie> get(String url) {
+    public List<Movie> get(String url) throws IOException {
+        requestGenerator(url);
         return null;
     }
 
-    private String requestGenerator() throws IOException {
+    private String requestGenerator(String requestURL) throws IOException {
         //TODO: Eduard
 
         OkHttpClient client = new OkHttpClient();
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse("http://prog2.fh-campuswien.ac.at/movies").newBuilder();
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(requestURL).newBuilder();
         //urlBuilder.addQueryParameter("");
         //urlBuilder.addQueryParameter("");
         String url = urlBuilder.toString();
