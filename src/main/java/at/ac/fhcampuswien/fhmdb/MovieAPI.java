@@ -1,52 +1,32 @@
 package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.model.Movie;
-import com.google.gson.*;
-import javafx.collections.ObservableList;
-import okhttp3.*;
-import org.jetbrains.annotations.NotNull;
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 public class MovieAPI {
-    public List<Movie> get(String url) {
-        return null;
+    public static final String MOVIES_ENDPOINT = "http://prog2.fh-campuswien.ac.at/movies";
+
+    public static List<Movie> get(String url) {
+        return responseParser(requestGenerator(url));
     }
 
-    private String requestGenerator() {
+    private static String requestGenerator(String url) {
         //TODO: Eduard
         return null;
     }
 
-    public static List<Movie> responseParser() {
-        final OkHttpClient client = new OkHttpClient();
+    private static List<Movie> responseParser(String jsonArray) {
         final Gson gson = new Gson();
-        final Movie[][] movies = new Movie[1][1];
 
-        Request request = new Request.Builder()
-                .header("User-Agent", "http.agent")
-                .url("http://prog2.fh-campuswien.ac.at/movies?query=The Godfather")
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                System.out.println("API_ERROR");
-            }
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try {
-                    String responseData = response.body().string();
-                    movies[0] = gson.fromJson(responseData, Movie[].class);
-                } catch (JsonIOException e) {
-                    System.out.println("JSON_ERROR: " + e.getMessage());
-                }
-            }
-        });
-
-        //TODO: Manuel
-        return Arrays.stream(movies[0]).toList();
+        try {
+            return Arrays.stream(gson.fromJson(jsonArray, Movie[].class)).toList();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }

@@ -5,10 +5,15 @@ import at.ac.fhcampuswien.fhmdb.model.Movie;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
@@ -18,27 +23,29 @@ import static at.ac.fhcampuswien.fhmdb.model.Genre.__NONE__;
 
 public class HomeController implements Initializable {
     @FXML
+    public JFXButton sortBtn;
+    @FXML
+    public TextField searchField;
+    @FXML
+    public JFXComboBox<Genre> genreComboBox;
+    @FXML
+    public DatePicker releaseYearDatePicker;
+    @FXML
+    public Slider ratingSlider;
+    @FXML
+    public Label ratingLable;
+    @FXML
     public JFXButton filterBtn;
 
     @FXML
-    public TextField searchField;
-
-    @FXML
     public JFXListView<Movie> movieListView;
-
-    @FXML
-    public JFXComboBox<Genre> genreComboBox;
-
-    @FXML
-    public JFXButton sortBtn;
-
     public List<Movie> allMovies = Movie.initializeMovies();
     public List<Movie> filteredMovies = new ArrayList<>(allMovies);
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        observableMovies.addAll(allMovies);         // add dummy data to observable list
+        observableMovies.setAll(allMovies);
 
         // initialize UI stuff
         movieListView.setItems(observableMovies);   // set data of observable list to list view
@@ -49,19 +56,25 @@ public class HomeController implements Initializable {
 
         // filter button
         filterBtn.setOnAction(actionEvent -> {
-            filteredMovies = new ArrayList<>();
-            filteredMovies.addAll(getMoviesFiltered(searchField.getText(), genreComboBox.getValue()));
+            var test = MovieAPI.get(MovieAPI.MOVIES_ENDPOINT);
+            if(test != null) allMovies = test;
+
+            filteredMovies = new ArrayList<>(getMoviesFiltered(searchField.getText(), genreComboBox.getValue()));
             observableMovies.setAll(filteredMovies);
-            System.out.println(MovieAPI.responseParser());
-            //observableMovies.setAll(MovieAPI.responseParser());
             movieListView.setCellFactory(movieListView -> new MovieCell());
-            //MovieAPI.responseParser();
         });
 
         // sort button
         sortBtn.setOnAction(actionEvent -> {
             sort_movies();
             observableMovies.setAll(filteredMovies);
+        });
+
+        ratingSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                ratingLable.textProperty().setValue(String.format("%.4s", String.format("%2.1f", (float) newValue)));
+            }
         });
     }
 
@@ -85,6 +98,11 @@ public class HomeController implements Initializable {
 
     //TODO: Eduard
     public static String getMostPopularActor(List<Movie> movies) {
+//        movies.stream()
+//                .filter(movie -> movie.mainCast.equals(movie.mainCast))
+//                .collect(Collectors.groupingBy(movie -> movie.mainCast, Collectors.counting()))
+//                .entrySet().stream().max(Map.Entry.comparingByValue())
+//                .ifPresent(System.out::println);
         return null;
     }
     public static int getLongestMovieTitle(List<Movie> movies) {

@@ -1,5 +1,7 @@
 package at.ac.fhcampuswien.fhmdb.model;
 
+import at.ac.fhcampuswien.fhmdb.MovieAPI;
+
 import java.util.*;
 
 import static at.ac.fhcampuswien.fhmdb.model.Genre.*;
@@ -35,25 +37,18 @@ public class Movie implements Comparable<Movie> {
         this.rating = rating;
     }
 
-    //    public String getId() { return id; }
     public String getTitle() { return title; }
-//    public EnumSet<Genre> getGenres() { return genres; }
-//    public int getReleaseYear() { return releaseYear; }
-//    public String getDescription() { return description; }
-//    public String getImgUrl() { return imgUrl; }
-//    public int getLengthInMinutes() { return lengthInMinutes; }
-//    public String[] getDirectors() { return directors; }
-//    public String[] getWriters() { return writers; }
-//    public String[] getMainCast() { return mainCast; }
-//    public int getRating() { return rating; }
 
     public static List<Movie> initializeMovies() {
-        List<Movie> movies = new ArrayList<>();
+        List<Movie> movies = MovieAPI.get(MovieAPI.MOVIES_ENDPOINT);
 
-        movies.add(new Movie("test1", "des1", ACTION));
-        movies.add(new Movie("test2", "des2", ADVENTURE, BIOGRAPHY));
-        movies.add(new Movie("test3", "des3", ANIMATION));
-        movies.add(new Movie("test4", "des4", ADVENTURE));
+        if(movies == null) {
+            movies = new ArrayList<>();
+            movies.add(new Movie("test1", "des1", ACTION));
+            movies.add(new Movie("test2", "des2", ADVENTURE, BIOGRAPHY));
+            movies.add(new Movie("test3", "des3", ANIMATION));
+            movies.add(new Movie("test4", "des4", ADVENTURE));
+        }
 
         return movies;
     }

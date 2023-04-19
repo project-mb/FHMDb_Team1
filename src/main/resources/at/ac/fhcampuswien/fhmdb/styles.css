@@ -38,3 +38,15 @@
     -fx-background-color: white;
     -fx-text-fill: #ffffff;
 }
+
+.filter-date-picker {
+}
+
+.filter-slider {
+    -fx-text-fill: #ffffff;
+}
+
+.filter-lable {
+    -fx-text-fill: #ffffff;
+    -fx-pref-width: 32;
+}
