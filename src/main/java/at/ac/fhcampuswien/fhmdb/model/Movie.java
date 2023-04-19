@@ -4,12 +4,12 @@ import java.util.*;
 
 import static at.ac.fhcampuswien.fhmdb.model.Genre.*;
 
-public class Movie implements Comparable<Movie>{
+public class Movie implements Comparable<Movie> {
     public final String id;
     public final String title;
-    public final String description;
     public final EnumSet<Genre> genres;
     public final int releaseYear;
+    public final String description;
     public final String imgUrl;
     public final int lengthInMinutes;
     public final String[] directors;
@@ -35,19 +35,20 @@ public class Movie implements Comparable<Movie>{
         this.rating = rating;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    /*public String getDescription() {
-        return description;
-    }
-    public EnumSet<Genre> getGenres() { return genres; }*/
-
+    //    public String getId() { return id; }
+    public String getTitle() { return title; }
+//    public EnumSet<Genre> getGenres() { return genres; }
+//    public int getReleaseYear() { return releaseYear; }
+//    public String getDescription() { return description; }
+//    public String getImgUrl() { return imgUrl; }
+//    public int getLengthInMinutes() { return lengthInMinutes; }
+//    public String[] getDirectors() { return directors; }
+//    public String[] getWriters() { return writers; }
+//    public String[] getMainCast() { return mainCast; }
+//    public int getRating() { return rating; }
 
     public static List<Movie> initializeMovies() {
         List<Movie> movies = new ArrayList<>();
-        // TODO add some dummy data here
 
         movies.add(new Movie("test1", "des1", ACTION));
         movies.add(new Movie("test2", "des2", ADVENTURE, BIOGRAPHY));
@@ -72,5 +73,22 @@ public class Movie implements Comparable<Movie>{
     @Override
     public int hashCode() {
         return Objects.hash(title, description, genres);
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", genres=" + genres +
+                ", releaseYear=" + releaseYear +
+                ", description='" + description + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", lengthInMinutes=" + lengthInMinutes +
+                ", directors=" + Arrays.toString(directors) +
+                ", writers=" + Arrays.toString(writers) +
+                ", mainCast=" + Arrays.toString(mainCast) +
+                ", rating=" + rating +
+                '}';
     }
 }

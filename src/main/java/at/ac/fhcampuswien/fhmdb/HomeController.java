@@ -56,7 +56,10 @@ public class HomeController implements Initializable {
             filteredMovies = new ArrayList<>();
             filteredMovies.addAll(getMoviesFiltered(searchField.getText(), genreComboBox.getValue()));
             observableMovies.setAll(filteredMovies);
+            System.out.println(MovieAPI.responseParser());
+            //observableMovies.setAll(MovieAPI.responseParser());
             movieListView.setCellFactory(movieListView -> new MovieCell());
+            //MovieAPI.responseParser();
         });
 
         // sort button
@@ -73,7 +76,7 @@ public class HomeController implements Initializable {
 
     public static List<Movie> getMoviesByGenre(List<Movie> movies, Genre filter) {
         if (filter == __NONE__) return movies;
-        return movies.stream().filter(movie -> movie.getGenres().contains(filter)).toList();
+        return movies.stream().filter(movie -> movie.genres.contains(filter)).toList();
     }
 
     public static List<Movie> getMoviesByTitle(String title, List<Movie> movieList) {
@@ -81,7 +84,7 @@ public class HomeController implements Initializable {
             return movieList;
         }
 
-        return movieList.stream().filter(movie -> movie.getTitle().contains(title)).toList();
+        return movieList.stream().filter(movie -> movie.title.contains(title)).toList();
     }
 
     //TODO: Eduard

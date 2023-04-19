@@ -1,51 +1,52 @@
 package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.model.Movie;
-
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
+import com.google.gson.*;
+import javafx.collections.ObservableList;
 import okhttp3.*;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class MovieAPI {
-
-    public List<Movie> get(String url) throws IOException {
-        requestGenerator(url);
+    public List<Movie> get(String url) {
         return null;
     }
 
-    private String requestGenerator(String requestURL) throws IOException {
+    private String requestGenerator() {
         //TODO: Eduard
+        return null;
+    }
 
-        OkHttpClient client = new OkHttpClient();
-
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(requestURL).newBuilder();
-        //urlBuilder.addQueryParameter("");
-        //urlBuilder.addQueryParameter("");
-        String url = urlBuilder.toString();
+    public static List<Movie> responseParser() {
+        final OkHttpClient client = new OkHttpClient();
+        final Gson gson = new Gson();
+        final Movie[][] movies = new Movie[1][1];
 
         Request request = new Request.Builder()
                 .header("User-Agent", "http.agent")
-                .url(url)
+                .url("http://prog2.fh-campuswien.ac.at/movies?query=The Godfather")
                 .build();
 
-        try {
-            Response response = client.newCall(request).execute();
-            return response.body().string();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                System.out.println("API_ERROR");
+            }
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try {
+                    String responseData = response.body().string();
+                    movies[0] = gson.fromJson(responseData, Movie[].class);
+                } catch (JsonIOException e) {
+                    System.out.println("JSON_ERROR: " + e.getMessage());
+                }
+            }
+        });
 
-        } catch (IOException e) {
-            PrintStream errorOut = new PrintStream("error.txt");
-            System.setErr(errorOut);
-        }
-
-        return null;
-    }
-
-    private List<Movie> responseParser() {
         //TODO: Manuel
-        return null;
+        return Arrays.stream(movies[0]).toList();
     }
 }
