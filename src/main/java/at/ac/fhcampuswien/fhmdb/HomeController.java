@@ -86,11 +86,13 @@ public class HomeController implements Initializable {
 
     //TODO: Eduard
     public static String getMostPopularActor(List<Movie> movies) {
-        try {
+
+
+        /*try {
             movieAPI.get("http://prog2.fh-campuswien.ac.at/movies");
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
+        }*/
         return null;
     }
     public static int getLongestMovieTitle(List<Movie> movies) {
