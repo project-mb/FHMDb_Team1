@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static at.ac.fhcampuswien.fhmdb.model.Genre.__NONE__;
 
@@ -90,7 +91,13 @@ public class HomeController implements Initializable {
     //TODO: Eduard
     public static String getMostPopularActor(List<Movie> movies) {
 
-
+        movies.stream()
+                .filter(movie -> movie.mainCast.equals(movie.mainCast))
+                .collect(Collectors.groupingBy(movie -> movie.mainCast, Collectors.counting()))
+                .entrySet()
+                .stream()
+                .max(Map.Entry.comparingByValue())
+                .ifPresent(System.out::println);
         /*try {
             movieAPI.get("http://prog2.fh-campuswien.ac.at/movies");
         } catch (IOException e) {
@@ -99,27 +106,15 @@ public class HomeController implements Initializable {
         return null;
     }
     public static int getLongestMovieTitle(List<Movie> movies) {
-        try {
-            movieAPI.get("http://prog2.fh-campuswien.ac.at/movies");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        movieAPI.get("http://prog2.fh-campuswien.ac.at/movies");
         return 0;
     }
     public static long countMoviesFrom(List<Movie> movies, String director) {
-        try {
-            movieAPI.get("http://prog2.fh-campuswien.ac.at/movies");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        movieAPI.get("http://prog2.fh-campuswien.ac.at/movies");
         return 0;
     }
     public static List<Movie> getMoviesBetweenYears(List<Movie> movies, int startYear, int endYear) {
-        try {
-            movieAPI.get("http://prog2.fh-campuswien.ac.at/movies");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        movieAPI.get("http://prog2.fh-campuswien.ac.at/movies");
         return null;
     }
 
