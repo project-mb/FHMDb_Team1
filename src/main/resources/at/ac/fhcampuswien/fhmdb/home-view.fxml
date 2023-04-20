@@ -38,7 +38,7 @@
 
             <DatePicker fx:id="releaseYearDatePicker" styleClass="filter-date-picker" stylesheets="@styles.css"/>
             <Slider fx:id="ratingSlider" max="10" blockIncrement="0.1" showTickLabels="true" showTickMarks="true" majorTickUnit="1" minorTickCount="2" styleClass="filter-slider" stylesheets="@styles.css"/>
-            <Label fx:id="ratingLable" styleClass="filter-lable" stylesheets="@styles.css"/>
+            <Label fx:id="ratingLable" text="0,0" styleClass="filter-lable" stylesheets="@styles.css"/>
 
             <JFXButton fx:id="filterBtn" styleClass="background-yellow" stylesheets="@styles.css" text="Filter" minWidth="73"/>
         </children>

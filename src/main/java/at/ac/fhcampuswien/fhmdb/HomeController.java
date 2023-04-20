@@ -73,7 +73,7 @@ public class HomeController implements Initializable {
         ratingSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                ratingLable.textProperty().setValue(String.format("%.4s", String.format("%2.1f", (float) newValue)));
+                ratingLable.textProperty().setValue(String.format("%.4s", String.format("%2.1f", (double) newValue)));
             }
         });
     }
