@@ -8,12 +8,12 @@ import okhttp3.*;
 
 public class MovieAPI {
 
-    public List<Movie> get(String url) throws IOException {
+    public List<Movie> get(String url) {
         requestGenerator(url);
         return null;
     }
 
-    private String requestGenerator(String requestURL) throws IOException {
+    public static String requestGenerator(String requestURL) {
         //TODO: Eduard
 
         OkHttpClient client = new OkHttpClient();
@@ -31,14 +31,12 @@ public class MovieAPI {
             return response.body().string();
 
         } catch (IOException e) {
-            PrintStream errorOut = new PrintStream("error.txt");
-            System.setErr(errorOut);
+            System.out.println(e.getMessage());
+            return null;
         }
-
-        return null;
     }
 
-    private List<Movie> responseParser() {
+    public static List<Movie> responseParser() {
         //TODO: Manuel
         return null;
     }
