@@ -19,10 +19,6 @@ public class Movie implements Comparable<Movie> {
     public final String[] mainCast;
     public final float rating;
 
-    public Movie(String title, String description, Genre... genres) {
-        this("", title, EnumSet.copyOf(Arrays.asList(genres)), 0, description, "", 0, null, null, null, 0);
-    }
-
     public Movie(String id, String title, EnumSet<Genre> genres, int releaseYear, String description, String imgUrl, int lengthInMinutes, String[] directors, String[] writers, String[] mainCast, int rating) {
         this.id = id;
         this.title = title;
@@ -44,10 +40,10 @@ public class Movie implements Comparable<Movie> {
 
         if(movies == null) {
             movies = new ArrayList<>();
-            movies.add(new Movie("test1", "des1", ACTION));
-            movies.add(new Movie("test2", "des2", ADVENTURE, BIOGRAPHY));
-            movies.add(new Movie("test3", "des3", ANIMATION));
-            movies.add(new Movie("test4", "des4", ADVENTURE));
+            movies.add(new Movie("id0" ,"title0", EnumSet.of(__NONE__), 0, "des0", "imgUrl0", 0, new String[]{"director01", "director02"}, new String[]{"writer01", "writer02"}, new String[]{"mainCast01", "mainCast02"}, 0));
+            movies.add(new Movie("id1" ,"title1", EnumSet.of(ACTION), 1111, "des1", "imgUrl1", 1, new String[]{"director11", "director12"}, new String[]{"writer11", "writer12"}, new String[]{"mainCast11", "mainCast12"}, 1));
+            movies.add(new Movie("id2" ,"title2", EnumSet.of(BIOGRAPHY, ANIMATION), 2222, "des2", "imgUrl2", 2, new String[]{"director21", "director22"}, new String[]{"writer21", "writer22"}, new String[]{"mainCast21", "mainCast22"}, 2));
+            movies.add(new Movie("id3" ,"title3", EnumSet.of(ADVENTURE, CRIME, ROMANCE), 3333, "des3", "imgUrl3", 3, new String[]{"director31", "director32"}, new String[]{"writer31", "writer32"}, new String[]{"mainCast31", "mainCast32"}, 3));
         }
 
         return movies;

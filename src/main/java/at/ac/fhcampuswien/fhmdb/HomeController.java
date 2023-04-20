@@ -63,7 +63,7 @@ public class HomeController implements Initializable {
 
         // sort button
         sortBtn.setOnAction(actionEvent -> {
-            sort_movies();
+            sort_movies(filteredMovies);
             observableMovies.setAll(filteredMovies);
         });
 
@@ -129,17 +129,17 @@ public class HomeController implements Initializable {
         return null;
     }
 
-    public void sort_movies() {
+    public void sort_movies(List<Movie> movies) {
         if (sortBtn.getText().equals("Sort (asc)")) {
             sortBtn.setText("Sort (desc)");
-            sortAscending();
+            sortAscending(movies);
         } else {
             sortBtn.setText("Sort (asc)");
-            sortDescending();
+            sortDescending(movies);
         }
     }
-    public void sortAscending() { filteredMovies.sort(Comparator.comparing(Movie::getTitle)); }
+    public void sortAscending(List<Movie> movies) { movies.sort(Comparator.comparing(Movie::getTitle)); }
 
-    public void sortDescending() { filteredMovies.sort(Comparator.comparing(Movie::getTitle).reversed()); }
+    public void sortDescending(List<Movie> movies) { movies.sort(Comparator.comparing(Movie::getTitle).reversed()); }
 
 }

@@ -1,0 +1,21 @@
+package at.ac.fhcampuswien.fhmdb;
+
+import at.ac.fhcampuswien.fhmdb.model.Movie;
+
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+
+import static at.ac.fhcampuswien.fhmdb.model.Genre.*;
+
+public class Test {
+    public static final List<Movie> testMovies = new ArrayList<>();
+    public static final HomeController testController = new HomeController();
+
+    static {
+        testMovies.add(new Movie("id0" ,"title0", EnumSet.of(__NONE__), 0, "des0", "imgUrl0", 0, new String[]{"director01", "director02"}, new String[]{"writer01", "writer02"}, new String[]{"mainCast01", "mainCast02"}, 0));
+        testMovies.add(new Movie("id1" ,"title1", EnumSet.of(ACTION), 1111, "des1", "imgUrl1", 1, new String[]{"director11", "director12"}, new String[]{"writer11", "writer12"}, new String[]{"mainCast11", "mainCast12"}, 1));
+        testMovies.add(new Movie("id2" ,"title2", EnumSet.of(BIOGRAPHY, ANIMATION), 2222, "des2", "imgUrl2", 2, new String[]{"director21", "director22"}, new String[]{"writer21", "writer22"}, new String[]{"mainCast21", "mainCast22"}, 2));
+        testMovies.add(new Movie("id3" ,"title3", EnumSet.of(ADVENTURE, CRIME, ROMANCE), 3333, "des3", "imgUrl3", 3, new String[]{"director31", "director32"}, new String[]{"writer31", "writer32"}, new String[]{"mainCast31", "mainCast32"}, 3));
+    }
+}
