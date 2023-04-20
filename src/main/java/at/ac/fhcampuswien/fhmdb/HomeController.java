@@ -5,13 +5,15 @@ import at.ac.fhcampuswien.fhmdb.model.Movie;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -21,6 +23,9 @@ import static at.ac.fhcampuswien.fhmdb.model.Genre.__NONE__;
 public class HomeController implements Initializable {
 
     public static MovieAPI movieAPI = new MovieAPI();
+
+    @FXML
+    public JFXButton sortBtn;
 
     @FXML
     public JFXButton filterBtn;
@@ -35,7 +40,9 @@ public class HomeController implements Initializable {
     public JFXComboBox<Genre> genreComboBox;
 
     @FXML
-    public JFXButton sortBtn;
+    public DatePicker releaseYearDatePicker;
+    @FXML
+    public Slider ratingSlider;
 
     public List<Movie> allMovies = Movie.initializeMovies();
     public List<Movie> filteredMovies = new ArrayList<>(allMovies);
@@ -43,7 +50,7 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        observableMovies.addAll(allMovies);         // add dummy data to observable list
+        observableMovies.setAll(allMovies);
 
         // initialize UI stuff
         movieListView.setItems(observableMovies);   // set data of observable list to list view
@@ -54,13 +61,12 @@ public class HomeController implements Initializable {
 
         // filter button
         filterBtn.setOnAction(actionEvent -> {
-            filteredMovies = new ArrayList<>();
-            filteredMovies.addAll(getMoviesFiltered(searchField.getText(), genreComboBox.getValue()));
+            var test = MovieAPI.get(MovieAPI.MOVIES_ENDPOINT);
+            if(test != null) allMovies = test;
+
+            filteredMovies = new ArrayList<>(getMoviesFiltered(searchField.getText(), genreComboBox.getValue()));
             observableMovies.setAll(filteredMovies);
-            System.out.println(MovieAPI.responseParser());
-            //observableMovies.setAll(MovieAPI.responseParser());
             movieListView.setCellFactory(movieListView -> new MovieCell());
-            //MovieAPI.responseParser();
         });
 
         // sort button
