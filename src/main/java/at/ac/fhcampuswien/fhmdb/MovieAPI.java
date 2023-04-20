@@ -1,12 +1,8 @@
 package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.model.Movie;
-
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import okhttp3.*;
 
@@ -23,8 +19,6 @@ public class MovieAPI {
         OkHttpClient client = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(requestURL).newBuilder();
-        //urlBuilder.addQueryParameter("");
-        //urlBuilder.addQueryParameter("");
         String url = urlBuilder.toString();
 
         Request request = new Request.Builder()
