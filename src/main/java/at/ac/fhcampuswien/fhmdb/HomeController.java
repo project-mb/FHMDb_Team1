@@ -5,13 +5,10 @@ import at.ac.fhcampuswien.fhmdb.model.Movie;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -29,7 +26,7 @@ public class HomeController implements Initializable {
     @FXML
     public JFXComboBox<Genre> genreComboBox;
     @FXML
-    public DatePicker releaseYearDatePicker;
+    public TextField releaseYearText;
     @FXML
     public Slider ratingSlider;
     @FXML
@@ -57,9 +54,9 @@ public class HomeController implements Initializable {
         // filter button
         filterBtn.setOnAction(actionEvent -> {
             var test = MovieAPI.get(MovieAPI.MOVIES_ENDPOINT);
-            if(test != null) allMovies = test;
+            if (test != null) allMovies = test;
 
-            filteredMovies = new ArrayList<>(getMoviesFiltered(searchField.getText(), genreComboBox.getValue()));
+            filteredMovies = new ArrayList<>(getMoviesFiltered(searchField.getText(), genreComboBox.getValue(), 0, 0));
             observableMovies.setAll(filteredMovies);
             movieListView.setCellFactory(movieListView -> new MovieCell());
         });
@@ -70,22 +67,31 @@ public class HomeController implements Initializable {
             observableMovies.setAll(filteredMovies);
         });
 
-        ratingSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                ratingLable.textProperty().setValue(String.format("%.4s", String.format("%2.1f", (double) newValue)));
+        releaseYearText.textProperty().addListener((observable, oldValue, newValue) -> {
+            String temp = "";
+            if (newValue.equals("")) return;
+            try {
+                Integer.parseInt(newValue);
+                if (newValue.length() > 4) temp = oldValue;
+                else temp = newValue;
+            } catch (Exception e) {
+                temp = oldValue;
+            } finally {
+                releaseYearText.textProperty().set(temp);
             }
+        });
+
+        ratingSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            ratingLable.textProperty().setValue(String.format("%.4s", String.format("%2.1f", (double) newValue)));
         });
     }
 
-    public List<Movie> getMoviesFiltered(String searchQuery, Genre filter) {
-        List<Movie> filteredMovies = getMoviesByGenre(allMovies, filter);
-        return getMoviesByTitle(searchQuery, filteredMovies);
-    }
+    public List<Movie> getMoviesFiltered(String searchQuery, Genre genreFilter, int releaseYearFilter, int ratingFilter) {
+        List<Movie> filteredByRating = getMoviesByRating(allMovies, ratingFilter);
+        List<Movie> filteredByReleaseYear = getMoviesByReleaseYear(filteredByRating, releaseYearFilter);
+        List<Movie> filteredByGenre = getMoviesByGenre(filteredByReleaseYear, genreFilter);
 
-    public static List<Movie> getMoviesByGenre(List<Movie> movies, Genre filter) {
-        if (filter == __NONE__) return movies;
-        return movies.stream().filter(movie -> movie.genres.contains(filter)).toList();
+        return getMoviesByTitle(searchQuery, filteredByGenre);
     }
 
     public static List<Movie> getMoviesByTitle(String title, List<Movie> movieList) {
@@ -96,15 +102,23 @@ public class HomeController implements Initializable {
         return movieList.stream().filter(movie -> movie.title.contains(title)).toList();
     }
 
-    //TODO: Eduard
-    public static String getMostPopularActor(List<Movie> movies) {
-//        movies.stream()
-//                .filter(movie -> movie.mainCast.equals(movie.mainCast))
-//                .collect(Collectors.groupingBy(movie -> movie.mainCast, Collectors.counting()))
-//                .entrySet().stream().max(Map.Entry.comparingByValue())
-//                .ifPresent(System.out::println);
-        return null;
+    public static List<Movie> getMoviesByGenre(List<Movie> movies, Genre filter) {
+        if (filter == __NONE__) return movies;
+        return movies.stream().filter(movie -> movie.genres.contains(filter)).toList();
     }
+
+    //TODO: Manuel
+    public static List<Movie> getMoviesByReleaseYear(List<Movie> movies, int releaseYear) {
+        if(releaseYear == 0) return movies;
+        return movies.stream().filter(movie -> movie.releaseYear == releaseYear).toList();
+    }
+    public static List<Movie> getMoviesByRating(List<Movie> movies, int rating) {
+        if (rating == 0) return movies;
+        return movies.stream().filter(movie -> movie.rating == rating).toList();
+    }
+
+    //TODO: Eduard
+    public static String getMostPopularActor(List<Movie> movies) { return null; }
     public static int getLongestMovieTitle(List<Movie> movies) {
         return 0;
     }
@@ -112,14 +126,6 @@ public class HomeController implements Initializable {
         return 0;
     }
     public static List<Movie> getMoviesBetweenYears(List<Movie> movies, int startYear, int endYear) {
-        return null;
-    }
-
-    //TODO: Manuel
-    public static List<Movie> getMoviesByReleaseYear(List<Movie> movies, int releaseYear) {
-        return null;
-    }
-    public static List<Movie> getMoviesByRating(List<Movie> movies, int rating) {
         return null;
     }
 

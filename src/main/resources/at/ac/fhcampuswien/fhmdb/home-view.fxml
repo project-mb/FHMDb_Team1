@@ -34,9 +34,9 @@
         <children>
             <JFXButton fx:id="sortBtn" styleClass="background-yellow" stylesheets="@styles.css" text="Sort (asc)" minWidth="73"/>
             <TextField fx:id="searchField" prefHeight="25.0" prefWidth="170.0" promptText="Search FHMDb"/>
-            <JFXComboBox fx:id="genreComboBox" focusColor="#f5c518" styleClass="filter-combo-box" stylesheets="@styles.css"/>
+            <JFXComboBox fx:id="genreComboBox" focusColor="#f5c518" prefWidth="170.0" styleClass="filter-combo-box" stylesheets="@styles.css"/>
 
-            <DatePicker fx:id="releaseYearDatePicker" styleClass="filter-date-picker" stylesheets="@styles.css"/>
+            <TextField fx:id="releaseYearText" prefWidth="170.0" promptText="Release Year" stylesheets="@styles.css"/>
             <Slider fx:id="ratingSlider" max="10" blockIncrement="0.1" showTickLabels="true" showTickMarks="true" majorTickUnit="1" minorTickCount="2" styleClass="filter-slider" stylesheets="@styles.css"/>
             <Label fx:id="ratingLable" text="0,0" styleClass="filter-lable" stylesheets="@styles.css"/>
 
