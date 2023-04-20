@@ -2,7 +2,6 @@ package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.model.Movie;
 import com.google.gson.Gson;
-import com.google.gson.JsonIOException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,12 +13,12 @@ public class MovieAPI {
         return responseParser(requestGenerator(url));
     }
 
-    private static String requestGenerator(String url) {
+    protected static String requestGenerator(String url) {
         //TODO: Eduard
         return null;
     }
 
-    private static List<Movie> responseParser(String jsonArray) {
+    protected static List<Movie> responseParser(String jsonArray) {
         final Gson gson = new Gson();
 
         try {

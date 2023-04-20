@@ -138,8 +138,8 @@ public class HomeController implements Initializable {
             sortDescending(movies);
         }
     }
-    public void sortAscending(List<Movie> movies) { movies.sort(Comparator.comparing(Movie::getTitle)); }
+    protected void sortAscending(List<Movie> movies) { movies.sort(Comparator.comparing(Movie::getTitle)); }
 
-    public void sortDescending(List<Movie> movies) { movies.sort(Comparator.comparing(Movie::getTitle).reversed()); }
+    protected void sortDescending(List<Movie> movies) { movies.sort(Comparator.comparing(Movie::getTitle).reversed()); }
 
 }
