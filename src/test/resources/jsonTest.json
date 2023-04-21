@@ -1,0 +1,149 @@
+[
+  {
+    "id": "id0",
+    "title": "title0",
+    "genres": [
+      "__NONE__"
+    ],
+    "releaseYear": 0,
+    "description": "des0",
+    "imgUrl": "imgUrl0",
+    "lengthInMinutes": 0,
+    "directors": [
+      "director01",
+      "director02"
+    ],
+    "writers": [
+      "writer01",
+      "writer02"
+    ],
+    "mainCast": [
+      "mainCast01",
+      "mainCast02"
+    ],
+    "rating": 0
+  },
+  {
+    "id": "id1",
+    "title": "title1",
+    "genres": [
+      "ACTION"
+    ],
+    "releaseYear": 1,
+    "description": "des1",
+    "imgUrl": "imgUrl1",
+    "lengthInMinutes": 1,
+    "directors": [
+      "director11",
+      "director12"
+    ],
+    "writers": [
+      "writer11",
+      "writer12"
+    ],
+    "mainCast": [
+      "mainCast11",
+      "mainCast12"
+    ],
+    "rating": 1
+  },
+  {
+    "id": "id2",
+    "title": "title2",
+    "genres": [
+      "BIOGRAPHY",
+      "ANIMATION"
+    ],
+    "releaseYear": 2,
+    "description": "des2",
+    "imgUrl": "imgUrl2",
+    "lengthInMinutes": 2,
+    "directors": [
+      "director21",
+      "director22"
+    ],
+    "writers": [
+      "writer21",
+      "writer22"
+    ],
+    "mainCast": [
+      "mainCast21",
+      "mainCast22"
+    ],
+    "rating": 2
+  },
+  {
+    "id": "id3",
+    "title": "title3",
+    "genres": [
+      "ADVENTURE",
+      "CRIME",
+      "ROMANCE"
+    ],
+    "releaseYear": 3,
+    "description": "des3",
+    "imgUrl": "imgUrl3",
+    "lengthInMinutes": 3,
+    "directors": [
+      "director31",
+      "director32"
+    ],
+    "writers": [
+      "writer31",
+      "writer32"
+    ],
+    "mainCast": [
+      "mainCast31",
+      "mainCast32"
+    ],
+    "rating": 3
+  },
+  {
+    "id": "id4",
+    "title": "title4",
+    "genres": [
+      "__NONE__"
+    ],
+    "releaseYear": 4,
+    "description": "des4",
+    "imgUrl": "imgUrl4",
+    "lengthInMinutes": 4,
+    "directors": [
+      "director41",
+      "director42"
+    ],
+    "writers": [
+      "writer41",
+      "writer42"
+    ],
+    "mainCast": [
+      "mainCast41",
+      "mainCast42"
+    ],
+    "rating": 4
+  },
+  {
+    "id": "id5",
+    "title": "title5long",
+    "genres": [
+      "__NONE__"
+    ],
+    "releaseYear": 5,
+    "description": "des5",
+    "imgUrl": "imgUrl5",
+    "lengthInMinutes": 5,
+    "directors": [
+      "director41",
+      "director42"
+    ],
+    "writers": [
+      "writer41",
+      "writer42"
+    ],
+    "mainCast": [
+      "mainCast41",
+      "mainCast42"
+    ],
+    "rating": 5
+  }
+]

@@ -5,13 +5,11 @@ import at.ac.fhcampuswien.fhmdb.model.Movie;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import java.net.URL;
@@ -22,29 +20,23 @@ import java.util.stream.Collectors;
 import static at.ac.fhcampuswien.fhmdb.model.Genre.__NONE__;
 
 public class HomeController implements Initializable {
-
-    public static MovieAPI movieAPI = new MovieAPI();
-
     @FXML
     public JFXButton sortBtn;
-
+    @FXML
+    public TextField searchField;
+    @FXML
+    public JFXComboBox<Genre> genreComboBox;
+    @FXML
+    public TextField releaseYearText;
+    @FXML
+    public Slider ratingSlider;
+    @FXML
+    public Label ratingLable;
     @FXML
     public JFXButton filterBtn;
 
     @FXML
-    public TextField searchField;
-
-    @FXML
     public JFXListView<Movie> movieListView;
-
-    @FXML
-    public JFXComboBox<Genre> genreComboBox;
-
-    @FXML
-    public DatePicker releaseYearDatePicker;
-    @FXML
-    public Slider ratingSlider;
-
     public List<Movie> allMovies = Movie.initializeMovies();
     public List<Movie> filteredMovies = new ArrayList<>(allMovies);
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
@@ -63,31 +55,44 @@ public class HomeController implements Initializable {
         // filter button
         filterBtn.setOnAction(actionEvent -> {
             var test = MovieAPI.get(MovieAPI.MOVIES_ENDPOINT);
-            if(test != null) allMovies = test;
+            if (test != null) allMovies = test;
 
-            filteredMovies = new ArrayList<>(getMoviesFiltered(searchField.getText(), genreComboBox.getValue()));
+            filteredMovies = new ArrayList<>(getMoviesFiltered(searchField.getText(), genreComboBox.getValue(), 0, 0));
             observableMovies.setAll(filteredMovies);
             movieListView.setCellFactory(movieListView -> new MovieCell());
-            //System.out.println(getMoviesBetweenYears(filteredMovies, 1995, 2001));
-            //System.out.println(getMostPopularActor(filteredMovies));
-            //System.out.println(getLongestMovieTitle(filteredMovies));
         });
 
         // sort button
         sortBtn.setOnAction(actionEvent -> {
-            sort_movies();
+            sort_movies(filteredMovies);
             observableMovies.setAll(filteredMovies);
+        });
+
+        releaseYearText.textProperty().addListener((observable, oldValue, newValue) -> {
+            String temp = "";
+            if (newValue.equals("")) return;
+            try {
+                Integer.parseInt(newValue);
+                if (newValue.length() > 4) temp = oldValue;
+                else temp = newValue;
+            } catch (Exception e) {
+                temp = oldValue;
+            } finally {
+                releaseYearText.textProperty().set(temp);
+            }
+        });
+
+        ratingSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            ratingLable.textProperty().setValue(String.format("%.4s", String.format("%2.1f", (double) newValue)));
         });
     }
 
-    public List<Movie> getMoviesFiltered(String searchQuery, Genre filter) {
-        List<Movie> filteredMovies = getMoviesByGenre(allMovies, filter);
-        return getMoviesByTitle(searchQuery, filteredMovies);
-    }
+    public List<Movie> getMoviesFiltered(String searchQuery, Genre genreFilter, int releaseYearFilter, int ratingFilter) {
+        List<Movie> filteredByRating = getMoviesByRating(allMovies, ratingFilter);
+        List<Movie> filteredByReleaseYear = getMoviesByReleaseYear(filteredByRating, releaseYearFilter);
+        List<Movie> filteredByGenre = getMoviesByGenre(filteredByReleaseYear, genreFilter);
 
-    public static List<Movie> getMoviesByGenre(List<Movie> movies, Genre filter) {
-        if (filter == __NONE__) return movies;
-        return movies.stream().filter(movie -> movie.genres.contains(filter)).toList();
+        return getMoviesByTitle(searchQuery, filteredByGenre);
     }
 
     public static List<Movie> getMoviesByTitle(String title, List<Movie> movieList) {
@@ -98,64 +103,70 @@ public class HomeController implements Initializable {
         return movieList.stream().filter(movie -> movie.title.contains(title)).toList();
     }
 
-    //TODO: Eduard
-    public static String getMostPopularActor(List<Movie> movies) {
-
-        return movies
-                .stream()
-                .map(movie -> movie.mainCast)
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
-
-                .toString();
-
-        /*movies.stream()
-                .filter(movie -> movie.mainCast.equals(movie.mainCast))
-                .collect(Collectors.groupingBy(movie -> movie.mainCast, Collectors.counting()))
-                .entrySet()
-                .stream()
-                .max(Map.Entry.comparingByValue())
-                .ifPresent(System.out::println);*/
-        //return movies.stream()//.filter(movie -> movie.mainCast)
-                //.stream()
-                /*.filter(movies.stream().forEach(movie -> movie.title.length() > movie.title.length()))
-                .filter(movie -> movie.mainCast.equals(movie.mainCast))
-                .collect(Collectors.groupingBy(movie -> movie.mainCast, Collectors.counting()))
-                .entrySet()
-                .stream()
-                .max(Map.Entry.comparingByValue())
-                .toString();*/
-                //.ifPresent(System.out::println);
-        //return null;
-    }
-    public static int getLongestMovieTitle(List<Movie> movies) {
-        return 0;
-    }
-    public static long countMoviesFrom(List<Movie> movies, String director) {
-        return 0;
-    }
-    public static List<Movie> getMoviesBetweenYears(List<Movie> movies, int startYear, int endYear) {
-        return movies.stream()
-                .filter(movie -> (movie.releaseYear <= startYear) && (movie.releaseYear >= endYear)).toList();
+    public static List<Movie> getMoviesByGenre(List<Movie> movies, Genre filter) {
+        if (filter == __NONE__) return movies;
+        return movies.stream().filter(movie -> movie.genres.contains(filter)).toList();
     }
 
     //TODO: Manuel
     public static List<Movie> getMoviesByReleaseYear(List<Movie> movies, int releaseYear) {
-        return null;
+        if (releaseYear == 0) return movies;
+        return movies.stream().filter(movie -> movie.releaseYear == releaseYear).toList();
     }
     public static List<Movie> getMoviesByRating(List<Movie> movies, int rating) {
-        return null;
+        if (rating == 0) return movies;
+        return movies.stream().filter(movie -> movie.rating == rating).toList();
     }
 
-    public void sort_movies() {
+    //TODO: Eduard
+    public static String getMostPopularActor(List<Movie> movies) {
+        if (movies == null || movies.size() == 0) return "";
+
+        System.out.println(
+                movies.stream()
+                        .map(movie -> movie.mainCast)
+                        .flatMap(Arrays::stream)
+                        .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+        );
+
+        return "";
+    }
+    public static int getLongestMovieTitle(List<Movie> movies) {
+        if (movies == null || movies.size() == 0) return 0;
+        return movies.stream()
+                .max(Comparator.comparingInt(movie -> movie.title.length()))
+                .get().title.length();
+    }
+    public static long countMoviesFrom(List<Movie> movies, String director) {
+        if (movies == null || movies.size() == 0) return 0;
+        if (director.equals("")) return movies.size();
+
+        return movies.stream()
+                .map(movie -> movie.directors)
+                .flatMap(Arrays::stream)
+                .collect(Collectors.groupingBy(s -> s.equals(director))).size();
+    }
+    public static List<Movie> getMoviesBetweenYears(List<Movie> movies, int startYear, int endYear) {
+        if (movies == null || movies.size() == 0) return null;
+        if (startYear <= 0 || endYear <= 0) return null;
+        if (startYear > endYear) return null;
+
+        return movies.stream()
+                .filter(movie -> movie.releaseYear >= startYear && movie.releaseYear <= endYear)
+                .toList();
+    }
+
+    public void sort_movies(List<Movie> movies) {
         if (sortBtn.getText().equals("Sort (asc)")) {
             sortBtn.setText("Sort (desc)");
-            sortAscending();
+            sortAscending(movies);
         } else {
             sortBtn.setText("Sort (asc)");
-            sortDescending();
+            sortDescending(movies);
         }
     }
-    public void sortAscending() { filteredMovies.sort(Comparator.comparing(Movie::getTitle)); }
+    protected void sortAscending(List<Movie> movies) { movies.sort(Comparator.comparing(Movie::getTitle)); }
 
-    public void sortDescending() { filteredMovies.sort(Comparator.comparing(Movie::getTitle).reversed()); }
+    protected void sortDescending(List<Movie> movies) { movies.sort(Comparator.comparing(Movie::getTitle).reversed()); }
+
 }
