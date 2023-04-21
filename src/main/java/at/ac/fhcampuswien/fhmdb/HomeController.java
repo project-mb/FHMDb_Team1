@@ -95,7 +95,7 @@ public class HomeController implements Initializable {
         return getMoviesByTitle(searchQuery, filteredByGenre);
     }
 
-    public static List<Movie> getMoviesByTitle(String title, List<Movie> movieList) {
+    protected static List<Movie> getMoviesByTitle(String title, List<Movie> movieList) {
         if (Objects.equals(title, "") || Objects.equals(title, " ")) {
             return movieList;
         }
@@ -103,22 +103,21 @@ public class HomeController implements Initializable {
         return movieList.stream().filter(movie -> movie.title.contains(title)).toList();
     }
 
-    public static List<Movie> getMoviesByGenre(List<Movie> movies, Genre filter) {
-        if (filter == __NONE__) return movies;
-        return movies.stream().filter(movie -> movie.genres.contains(filter)).toList();
+    protected static List<Movie> getMoviesByGenre(List<Movie> movies, Genre genre) {
+        if (genre == __NONE__) return movies;
+        return movies.stream().filter(movie -> movie.genres.contains(genre)).toList();
     }
 
-    public static List<Movie> getMoviesByReleaseYear(List<Movie> movies, int releaseYear) {
+    protected static List<Movie> getMoviesByReleaseYear(List<Movie> movies, int releaseYear) {
         if (releaseYear == 0) return movies;
         return movies.stream().filter(movie -> movie.releaseYear == releaseYear).toList();
     }
-    public static List<Movie> getMoviesByRating(List<Movie> movies, int rating) {
+    protected static List<Movie> getMoviesByRating(List<Movie> movies, int rating) {
         if (rating == 0) return movies;
         return movies.stream().filter(movie -> movie.rating == rating).toList();
     }
 
-    //TODO: fix getMostPopularActor
-    public static String getMostPopularActor(List<Movie> movies) {
+    protected static String getMostPopularActor(List<Movie> movies) {
         if (movies == null || movies.size() == 0) return "";
 
         return movies.stream()
@@ -127,13 +126,13 @@ public class HomeController implements Initializable {
                 .max(Comparator.comparing(s -> s))
                 .get();
     }
-    public static int getLongestMovieTitle(List<Movie> movies) {
+    protected static int getLongestMovieTitle(List<Movie> movies) {
         if (movies == null || movies.size() == 0) return 0;
         return movies.stream()
                 .max(Comparator.comparingInt(movie -> movie.title.length()))
                 .get().title.length();
     }
-    public static long countMoviesFrom(List<Movie> movies, String director) {
+    protected static long countMoviesFrom(List<Movie> movies, String director) {
         if (movies == null || movies.size() == 0) return 0;
         if (director.equals("")) return movies.size();
 
@@ -142,7 +141,7 @@ public class HomeController implements Initializable {
                 .flatMap(Arrays::stream)
                 .collect(Collectors.groupingBy(s -> s.equals(director))).size();
     }
-    public static List<Movie> getMoviesBetweenYears(List<Movie> movies, int startYear, int endYear) {
+    protected static List<Movie> getMoviesBetweenYears(List<Movie> movies, int startYear, int endYear) {
         if (movies == null || movies.size() == 0) return null;
         if (startYear <= 0 || endYear <= 0) return null;
         if (startYear > endYear) return null;
