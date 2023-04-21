@@ -54,7 +54,7 @@ public class HomeController implements Initializable {
 
         // filter button
         filterBtn.setOnAction(actionEvent -> {
-            var test = MovieAPI.get(MovieAPI.MOVIES_ENDPOINT);
+            var test = MovieAPI.get(MovieAPI.MOVIES_ENDPOINT, searchField.getText(), genreComboBox.getValue().toString());
             if (test != null) allMovies = test;
 
             filteredMovies = new ArrayList<>(getMoviesFiltered(searchField.getText(), genreComboBox.getValue(), 0, 0));
@@ -108,7 +108,6 @@ public class HomeController implements Initializable {
         return movies.stream().filter(movie -> movie.genres.contains(filter)).toList();
     }
 
-    //TODO: Manuel
     public static List<Movie> getMoviesByReleaseYear(List<Movie> movies, int releaseYear) {
         if (releaseYear == 0) return movies;
         return movies.stream().filter(movie -> movie.releaseYear == releaseYear).toList();
@@ -118,7 +117,7 @@ public class HomeController implements Initializable {
         return movies.stream().filter(movie -> movie.rating == rating).toList();
     }
 
-    //TODO: Eduard
+    //TODO: fix getMostPopularActor
     public static String getMostPopularActor(List<Movie> movies) {
         if (movies == null || movies.size() == 0) return "";
 

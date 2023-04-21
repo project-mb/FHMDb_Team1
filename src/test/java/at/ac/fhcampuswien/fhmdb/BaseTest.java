@@ -14,7 +14,9 @@ import static at.ac.fhcampuswien.fhmdb.model.Genre.*;
 public class BaseTest {
     public static final List<Movie> testMovies = new ArrayList<>();
     public static final HomeController testController = new HomeController();
-    public static final String testJson;
+    public static final String queryTest;
+    public static final String genreTest;
+    public static final String jsonTest;
 
     static {
         testMovies.add(new Movie("id0", "title0", EnumSet.of(__NONE__), 0, "des0", "imgUrl0", 0, new String[]{"director01", "director02"}, new String[]{"writer01", "writer02"}, new String[]{"mainCast01", "mainCast02"}, 0));
@@ -24,8 +26,14 @@ public class BaseTest {
         testMovies.add(new Movie("id4", "title4", EnumSet.of(__NONE__), 4444, "des4", "imgUrl4", 4, new String[]{"director41", "director42"}, new String[]{"writer41", "writer42"}, new String[]{"mainCast41", "mainCast41"}, 4));
         testMovies.add(new Movie("id5", "title5long", EnumSet.of(__NONE__), 5555, "des5", "imgUrl5", 5, new String[]{"director41", "director42"}, new String[]{"writer41", "writer42"}, new String[]{"mainCast41", "mainCast41"}, 5));
 
+        jsonTest = importJson("D:\\Studium\\FHCampusWien\\2_Sommersemester2023\\Prog2\\UE\\Exercise2\\src\\test\\resources\\jsonTest.json");
+        queryTest = importJson("D:\\Studium\\FHCampusWien\\2_Sommersemester2023\\Prog2\\UE\\Exercise2\\src\\test\\resources\\queryTest.json");
+        genreTest = importJson("D:\\Studium\\FHCampusWien\\2_Sommersemester2023\\Prog2\\UE\\Exercise2\\src\\test\\resources\\genreTest.json");
+    }
+
+    private static String importJson(String path){
         try {
-            testJson = new String(Files.readAllBytes(Paths.get("D:\\Studium\\FHCampusWien\\2_Sommersemester2023\\Prog2\\UE\\Exercise2\\src\\test\\resources\\jsonTest.json")));
+            return new String(Files.readAllBytes(Paths.get(path)));
         } catch (IOException e) {
             assert false;
             throw new RuntimeException(e);
