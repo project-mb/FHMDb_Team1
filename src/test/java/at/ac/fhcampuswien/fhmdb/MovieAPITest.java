@@ -62,7 +62,7 @@ public class MovieAPITest {
         }
 
         @Test
-        void requestGenerator_queryOnlyWithGenreIsEmptyString(){
+        void requestGenerator_queryOnly_withGenreIs_emptyString(){
             String expected = queryTest;
 
             String actual = MovieAPI.requestGenerator(MovieAPI.MOVIES_ENDPOINT, "The Godfather", "");

@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static at.ac.fhcampuswien.fhmdb.model.Genre.__NONE__;
+import static at.ac.fhcampuswien.fhmdb.model.Genre.*;
 
 public class HomeController implements Initializable {
     @FXML
@@ -83,7 +83,8 @@ public class HomeController implements Initializable {
         });
 
         ratingSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            ratingLable.textProperty().setValue(String.format("%.4s", String.format("%2.1f", (double) newValue)));
+            String temp = String.format("%.4s", String.format("%2.1f", (double) newValue));
+            ratingLable.textProperty().setValue(temp);
         });
     }
 
@@ -124,10 +125,11 @@ public class HomeController implements Initializable {
                 .map(movie -> movie.mainCast)
                 .flatMap(Arrays::stream)
                 .max(Comparator.comparing(s -> s))
-                .get();
+                .orElse(null);
     }
     protected static int getLongestMovieTitle(List<Movie> movies) {
         if (movies == null || movies.size() == 0) return 0;
+
         return movies.stream()
                 .max(Comparator.comparingInt(movie -> movie.title.length()))
                 .get().title.length();
