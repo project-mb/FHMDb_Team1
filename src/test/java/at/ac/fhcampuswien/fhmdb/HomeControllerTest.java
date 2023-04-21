@@ -135,4 +135,54 @@ public class HomeControllerTest {
             assertEquals(expected, actual);
         }
     }
+
+    @Nested
+    class GetMostPopularActor{
+        @Test
+        void getMostPopularActor_basic(){
+            String expected = "mainCast41";
+
+            String actual = HomeController.getMostPopularActor(testMovies);
+
+            assertEquals(expected, actual);
+        }
+    }
+
+    @Nested
+    class GetLongestMovieTitle{
+        @Test
+        void getLongestMovieTitle_basic(){
+            int expected = 10;
+
+            int actual = HomeController.getLongestMovieTitle(testMovies);
+
+            assertEquals(expected, actual);
+        }
+    }
+
+    @Nested
+    class CountMoviesFrom{
+        @Test
+        void countMoviesFrom_basic(){
+            long expected = 2;
+
+            long actual = HomeController.countMoviesFrom(testMovies, "director41");
+
+            assertEquals(expected, actual);
+        }
+    }
+
+    @Nested
+    class GetMoviesBetweenYears{
+        @Test
+        void getMoviesBetweenYears_basic(){
+            List<Movie> expected = new ArrayList<>();
+            expected.add(testMovies.get(2));
+            expected.add(testMovies.get(3));
+
+            List<Movie> actual = HomeController.getMoviesBetweenYears(testMovies, 2222, 3333);
+
+            assertEquals(expected, actual);
+        }
+    }
 }

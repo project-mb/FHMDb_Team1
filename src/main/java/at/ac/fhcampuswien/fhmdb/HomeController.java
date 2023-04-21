@@ -15,6 +15,8 @@ import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static at.ac.fhcampuswien.fhmdb.model.Genre.__NONE__;
 
@@ -109,7 +111,7 @@ public class HomeController implements Initializable {
 
     //TODO: Manuel
     public static List<Movie> getMoviesByReleaseYear(List<Movie> movies, int releaseYear) {
-        if(releaseYear == 0) return movies;
+        if (releaseYear == 0) return movies;
         return movies.stream().filter(movie -> movie.releaseYear == releaseYear).toList();
     }
     public static List<Movie> getMoviesByRating(List<Movie> movies, int rating) {
@@ -118,15 +120,41 @@ public class HomeController implements Initializable {
     }
 
     //TODO: Eduard
-    public static String getMostPopularActor(List<Movie> movies) { return null; }
+    public static String getMostPopularActor(List<Movie> movies) {
+        if (movies == null || movies.size() == 0) return "";
+
+        System.out.println(
+                movies.stream()
+                        .map(movie -> movie.mainCast)
+                        .flatMap(Arrays::stream)
+                        .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+        );
+
+        return "";
+    }
     public static int getLongestMovieTitle(List<Movie> movies) {
-        return 0;
+        if (movies == null || movies.size() == 0) return 0;
+        return movies.stream()
+                .max(Comparator.comparingInt(movie -> movie.title.length()))
+                .get().title.length();
     }
     public static long countMoviesFrom(List<Movie> movies, String director) {
-        return 0;
+        if (movies == null || movies.size() == 0) return 0;
+        if (director.equals("")) return movies.size();
+
+        return movies.stream()
+                .map(movie -> movie.directors)
+                .flatMap(Arrays::stream)
+                .collect(Collectors.groupingBy(s -> s.equals(director))).size();
     }
     public static List<Movie> getMoviesBetweenYears(List<Movie> movies, int startYear, int endYear) {
-        return null;
+        if (movies == null || movies.size() == 0) return null;
+        if (startYear <= 0 || endYear <= 0) return null;
+        if (startYear > endYear) return null;
+
+        return movies.stream()
+                .filter(movie -> movie.releaseYear >= startYear && movie.releaseYear <= endYear)
+                .toList();
     }
 
     public void sort_movies(List<Movie> movies) {

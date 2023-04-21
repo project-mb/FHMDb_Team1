@@ -21,6 +21,8 @@ public class BaseTest {
         testMovies.add(new Movie("id1", "title1", EnumSet.of(ACTION), 1111, "des1", "imgUrl1", 1, new String[]{"director11", "director12"}, new String[]{"writer11", "writer12"}, new String[]{"mainCast11", "mainCast12"}, 1));
         testMovies.add(new Movie("id2", "title2", EnumSet.of(BIOGRAPHY, ANIMATION), 2222, "des2", "imgUrl2", 2, new String[]{"director21", "director22"}, new String[]{"writer21", "writer22"}, new String[]{"mainCast21", "mainCast22"}, 2));
         testMovies.add(new Movie("id3", "title3", EnumSet.of(ADVENTURE, CRIME, ROMANCE), 3333, "des3", "imgUrl3", 3, new String[]{"director31", "director32"}, new String[]{"writer31", "writer32"}, new String[]{"mainCast31", "mainCast32"}, 3));
+        testMovies.add(new Movie("id4", "title4", EnumSet.of(__NONE__), 4444, "des4", "imgUrl4", 4, new String[]{"director41", "director42"}, new String[]{"writer41", "writer42"}, new String[]{"mainCast41", "mainCast41"}, 4));
+        testMovies.add(new Movie("id5", "title5long", EnumSet.of(__NONE__), 5555, "des5", "imgUrl5", 5, new String[]{"director41", "director42"}, new String[]{"writer41", "writer42"}, new String[]{"mainCast41", "mainCast41"}, 5));
 
         try {
             testJson = new String(Files.readAllBytes(Paths.get("D:\\Studium\\FHCampusWien\\2_Sommersemester2023\\Prog2\\UE\\Exercise2\\src\\test\\resources\\jsonTest.json")));
