@@ -10,15 +10,10 @@ import okhttp3.*;
 
 public class MovieAPI {
 
-    public static List<Movie> get(String url) {
-        requestGenerator(url);
-        return null;
+    public static List<Movie> get(String url, String... attributes) {
+        return responseParser(requestGenerator(url));
     }
     public static final String MOVIES_ENDPOINT = "http://prog2.fh-campuswien.ac.at/movies";
-
-    /*public static List<Movie> get(String url) {
-        return responseParser(requestGenerator(url));
-    }*/
 
     public static String requestGenerator(String requestURL) {
         //TODO: Eduard

@@ -16,6 +16,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static at.ac.fhcampuswien.fhmdb.model.Genre.__NONE__;
@@ -67,6 +68,9 @@ public class HomeController implements Initializable {
             filteredMovies = new ArrayList<>(getMoviesFiltered(searchField.getText(), genreComboBox.getValue()));
             observableMovies.setAll(filteredMovies);
             movieListView.setCellFactory(movieListView -> new MovieCell());
+            //System.out.println(getMoviesBetweenYears(filteredMovies, 1995, 2001));
+            //System.out.println(getMostPopularActor(filteredMovies));
+            //System.out.println(getLongestMovieTitle(filteredMovies));
         });
 
         // sort button
@@ -97,31 +101,41 @@ public class HomeController implements Initializable {
     //TODO: Eduard
     public static String getMostPopularActor(List<Movie> movies) {
 
-        movies.stream()
+        return movies
+                .stream()
+                .map(movie -> movie.mainCast)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+
+                .toString();
+
+        /*movies.stream()
                 .filter(movie -> movie.mainCast.equals(movie.mainCast))
                 .collect(Collectors.groupingBy(movie -> movie.mainCast, Collectors.counting()))
                 .entrySet()
                 .stream()
                 .max(Map.Entry.comparingByValue())
-                .ifPresent(System.out::println);
-        /*try {
-            movieAPI.get("http://prog2.fh-campuswien.ac.at/movies");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }*/
-        return null;
+                .ifPresent(System.out::println);*/
+        //return movies.stream()//.filter(movie -> movie.mainCast)
+                //.stream()
+                /*.filter(movies.stream().forEach(movie -> movie.title.length() > movie.title.length()))
+                .filter(movie -> movie.mainCast.equals(movie.mainCast))
+                .collect(Collectors.groupingBy(movie -> movie.mainCast, Collectors.counting()))
+                .entrySet()
+                .stream()
+                .max(Map.Entry.comparingByValue())
+                .toString();*/
+                //.ifPresent(System.out::println);
+        //return null;
     }
     public static int getLongestMovieTitle(List<Movie> movies) {
-        //movieAPI.get("http://prog2.fh-campuswien.ac.at/movies");
         return 0;
     }
     public static long countMoviesFrom(List<Movie> movies, String director) {
-        //movieAPI.get("http://prog2.fh-campuswien.ac.at/movies");
         return 0;
     }
     public static List<Movie> getMoviesBetweenYears(List<Movie> movies, int startYear, int endYear) {
-        //movieAPI.get("http://prog2.fh-campuswien.ac.at/movies");
-        return null;
+        return movies.stream()
+                .filter(movie -> (movie.releaseYear <= startYear) && (movie.releaseYear >= endYear)).toList();
     }
 
     //TODO: Manuel
