@@ -12,9 +12,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+
 import java.net.URL;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static at.ac.fhcampuswien.fhmdb.model.Genre.__NONE__;
@@ -121,14 +121,11 @@ public class HomeController implements Initializable {
     public static String getMostPopularActor(List<Movie> movies) {
         if (movies == null || movies.size() == 0) return "";
 
-        System.out.println(
-                movies.stream()
-                        .map(movie -> movie.mainCast)
-                        .flatMap(Arrays::stream)
-                        .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
-        );
-
-        return "";
+        return movies.stream()
+                .map(movie -> movie.mainCast)
+                .flatMap(Arrays::stream)
+                .max(Comparator.comparing(s -> s))
+                .get();
     }
     public static int getLongestMovieTitle(List<Movie> movies) {
         if (movies == null || movies.size() == 0) return 0;
