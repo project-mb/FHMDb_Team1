@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.fhmdb;
 
-import at.ac.fhcampuswien.fhmdb.model.Movie;
+import at.ac.fhcampuswien.fhmdb.LogicLayer.HomeController;
+import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-import static at.ac.fhcampuswien.fhmdb.model.Genre.*;
+import static at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre.*;
 
 public class BaseTest {
     public static final List<Movie> testMovies = new ArrayList<>();

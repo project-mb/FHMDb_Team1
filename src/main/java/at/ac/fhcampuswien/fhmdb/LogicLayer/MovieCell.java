@@ -1,12 +1,12 @@
-package at.ac.fhcampuswien.fhmdb;
+package at.ac.fhcampuswien.fhmdb.LogicLayer;
 
-import at.ac.fhcampuswien.fhmdb.model.Movie;
+import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
@@ -14,7 +14,15 @@ public class MovieCell extends ListCell<Movie> {
     private final Label title = new Label();
     private final Label detail = new Label();
     private final Label genres = new Label();
-    private final VBox layout = new VBox(title, detail, genres);
+    private final Button showDetails = new Button();
+    private final Button setWatchlist = new Button();
+
+    private final Region blank = new Region();
+
+    private final HBox layoutTitle = new HBox(title);
+    private final HBox layoutButtons = new HBox(showDetails, setWatchlist);
+    private final HBox layoutHorizontal = new HBox(layoutTitle, blank, layoutButtons);
+    private final VBox layout = new VBox(layoutHorizontal, detail, genres);
 
     @Override
     protected void updateItem(Movie movie, boolean empty) {
@@ -39,6 +47,15 @@ public class MovieCell extends ListCell<Movie> {
             detail.getStyleClass().add("text-white");
             genres.getStyleClass().add("text-white");
             layout.setBackground(new Background(new BackgroundFill(Color.web("#454545"), null, null)));
+
+            layoutTitle.alignmentProperty().set(Pos.CENTER_LEFT);
+            HBox.setHgrow(blank, Priority.ALWAYS);
+            layoutButtons.alignmentProperty().set(Pos.CENTER_RIGHT);
+            layoutButtons.setSpacing(10);
+            showDetails.setPrefWidth(100);
+            showDetails.textProperty().setValue("Show Details");
+            setWatchlist.setPrefWidth(100);
+            setWatchlist.textProperty().setValue("Watchlist");
 
             // layout
             title.fontProperty().set(Font.font(20));

@@ -1,6 +1,6 @@
-package at.ac.fhcampuswien.fhmdb;
+package at.ac.fhcampuswien.fhmdb.LogicLayer;
 
-import at.ac.fhcampuswien.fhmdb.model.Movie;
+import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -12,9 +12,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MovieAPITest {
     @Nested
-    class urlBuilder{
+    class urlBuilder {
         @Test
-        void urlBuilder_basic(){
+        void urlBuilder_basic() {
             String expected = "http://prog2.fh-campuswien.ac.at/movies?query=The%20Godfather&genre=DRAMA";
 
             String actual = MovieAPI.urlBuilder(MovieAPI.MOVIES_ENDPOINT, "The Godfather", "DRAMA");
@@ -23,7 +23,7 @@ public class MovieAPITest {
         }
 
         @Test
-        void urlBuilder_queryOnlyWithGenreIsEmptyString(){
+        void urlBuilder_queryOnlyWithGenreIsEmptyString() {
             String expected = "http://prog2.fh-campuswien.ac.at/movies?query=The%20Godfather";
 
             String actual = MovieAPI.urlBuilder(MovieAPI.MOVIES_ENDPOINT, "The Godfather", "");
@@ -32,7 +32,7 @@ public class MovieAPITest {
         }
 
         @Test
-        void urlBuilder_queryOnlyWithGenreIsNONE(){
+        void urlBuilder_queryOnlyWithGenreIsNONE() {
             String expected = "http://prog2.fh-campuswien.ac.at/movies?query=The%20Godfather";
 
             String actual = MovieAPI.urlBuilder(MovieAPI.MOVIES_ENDPOINT, "The Godfather", "__NONE__");
@@ -41,7 +41,7 @@ public class MovieAPITest {
         }
 
         @Test
-        void urlBuilder_genreOnly(){
+        void urlBuilder_genreOnly() {
             String expected = "http://prog2.fh-campuswien.ac.at/movies?genre=ROMANCE";
 
             String actual = MovieAPI.urlBuilder(MovieAPI.MOVIES_ENDPOINT, "", "ROMANCE");
@@ -51,9 +51,9 @@ public class MovieAPITest {
     }
 
     @Nested
-    class RequestGenerator{
+    class RequestGenerator {
         @Test
-        void requestGenerator_basic(){
+        void requestGenerator_basic() {
             String expected = queryTest;
 
             String actual = MovieAPI.requestGenerator(MovieAPI.MOVIES_ENDPOINT, "The Godfather", "DRAMA");
@@ -62,7 +62,7 @@ public class MovieAPITest {
         }
 
         @Test
-        void requestGenerator_queryOnly_withGenreIs_emptyString(){
+        void requestGenerator_queryOnly_withGenreIs_emptyString() {
             String expected = queryTest;
 
             String actual = MovieAPI.requestGenerator(MovieAPI.MOVIES_ENDPOINT, "The Godfather", "");
@@ -71,7 +71,7 @@ public class MovieAPITest {
         }
 
         @Test
-        void requestGenerator_queryOnlyWithGenreIsNONE(){
+        void requestGenerator_queryOnlyWithGenreIsNONE() {
             String expected = queryTest;
 
             String actual = MovieAPI.requestGenerator(MovieAPI.MOVIES_ENDPOINT, "The Godfather", "__NONE__");
@@ -80,7 +80,7 @@ public class MovieAPITest {
         }
 
         @Test
-        void requestGenerator_genreOnly(){
+        void requestGenerator_genreOnly() {
             String expected = genreTest;
 
             String actual = MovieAPI.requestGenerator(MovieAPI.MOVIES_ENDPOINT, "", "ROMANCE");
@@ -90,9 +90,9 @@ public class MovieAPITest {
     }
 
     @Nested
-    class ResponseParser{
+    class ResponseParser {
         @Test
-        void responseParser_basic(){
+        void responseParser_basic() {
             List<Movie> expected = new ArrayList<>(testMovies);
 
             List<Movie> actual = MovieAPI.responseParser(jsonTest);
@@ -101,7 +101,7 @@ public class MovieAPITest {
         }
 
         @Test
-        void responseParser_emptyArray(){
+        void responseParser_emptyArray() {
             List<Movie> expected = new ArrayList<>();
 
             List<Movie> actual = MovieAPI.responseParser("[]");
@@ -110,7 +110,7 @@ public class MovieAPITest {
         }
 
         @Test
-        void responseParser_empty(){
+        void responseParser_empty() {
             List<Movie> expected = null;
 
             List<Movie> actual = MovieAPI.responseParser("");
@@ -118,7 +118,7 @@ public class MovieAPITest {
             assertEquals(expected, actual);
         }
         @Test
-        void responseParser_notJson(){
+        void responseParser_notJson() {
             List<Movie> expected = null;
 
             List<Movie> actual = MovieAPI.responseParser("asdf");

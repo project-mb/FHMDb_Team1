@@ -1,6 +1,6 @@
-package at.ac.fhcampuswien.fhmdb;
+package at.ac.fhcampuswien.fhmdb.LogicLayer;
 
-import at.ac.fhcampuswien.fhmdb.model.Movie;
+import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -10,8 +10,8 @@ import java.util.List;
 
 import static at.ac.fhcampuswien.fhmdb.BaseTest.testController;
 import static at.ac.fhcampuswien.fhmdb.BaseTest.testMovies;
-import static at.ac.fhcampuswien.fhmdb.model.Genre.ADVENTURE;
-import static at.ac.fhcampuswien.fhmdb.model.Genre.__NONE__;
+import static at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre.ADVENTURE;
+import static at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre.__NONE__;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class HomeControllerTest {

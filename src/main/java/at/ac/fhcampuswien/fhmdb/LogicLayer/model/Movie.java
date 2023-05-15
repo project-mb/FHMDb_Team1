@@ -1,10 +1,10 @@
-package at.ac.fhcampuswien.fhmdb.model;
+package at.ac.fhcampuswien.fhmdb.LogicLayer.model;
 
-import at.ac.fhcampuswien.fhmdb.MovieAPI;
+import at.ac.fhcampuswien.fhmdb.LogicLayer.MovieAPI;
 
 import java.util.*;
 
-import static at.ac.fhcampuswien.fhmdb.model.Genre.*;
+import static at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre.*;
 
 public class Movie implements Comparable<Movie> {
     public final String id;
@@ -18,6 +18,8 @@ public class Movie implements Comparable<Movie> {
     public final String[] writers;
     public final String[] mainCast;
     public final float rating;
+
+    public boolean isWatchlisted;
 
     public Movie(String id, String title, EnumSet<Genre> genres, int releaseYear, String description, String imgUrl, int lengthInMinutes, String[] directors, String[] writers, String[] mainCast, int rating) {
         this.id = id;

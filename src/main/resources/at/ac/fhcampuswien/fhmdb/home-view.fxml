@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.*?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.control.Slider?>
 <VBox prefHeight="331.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="at.ac.fhcampuswien.fhmdb.HomeController">
-    <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="347.0" spacing="20.0"
+      fx:controller="at.ac.fhcampuswien.fhmdb.LogicLayer.HomeController">
+    <HBox fx:id="header" alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="347.0" spacing="20.0"
           style="-fx-background-color: black;">
         <padding>
             <Insets bottom="7.0" left="10.0" top="7.0"/>
@@ -28,19 +22,30 @@
                 </padding>
             </Label>
             <Label styleClass="text-white" stylesheets="@styles.css" text="Welcome to FHMDb!"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <JFXComboBox fx:id="jcb_menu" prefWidth="100" focusColor="#f5c518" styleClass="filter-combo-box"
+                         stylesheets="@styles.css"/>
+
+            <Region/>
         </children>
     </HBox>
-    <HBox spacing="5.0" styleClass="background-black" stylesheets="@styles.css">
+    <HBox fx:id="main" spacing="5.0" styleClass="background-black" stylesheets="@styles.css">
         <children>
-            <JFXButton fx:id="sortBtn" styleClass="background-yellow" stylesheets="@styles.css" text="Sort (asc)" minWidth="73"/>
+            <JFXButton fx:id="sortBtn" styleClass="background-yellow" stylesheets="@styles.css" text="Sort (asc)"
+                       minWidth="73"/>
             <TextField fx:id="searchField" prefHeight="25.0" prefWidth="170.0" promptText="Search FHMDb"/>
-            <JFXComboBox fx:id="genreComboBox" focusColor="#f5c518" prefWidth="170.0" styleClass="filter-combo-box" stylesheets="@styles.css"/>
+            <JFXComboBox fx:id="genreComboBox" focusColor="#f5c518" prefWidth="170.0" styleClass="filter-combo-box"
+                         stylesheets="@styles.css"/>
 
             <TextField fx:id="releaseYearText" prefWidth="170.0" promptText="Release Year" stylesheets="@styles.css"/>
-            <Slider fx:id="ratingSlider" max="10" blockIncrement="0.1" showTickLabels="true" showTickMarks="true" majorTickUnit="1" minorTickCount="2" styleClass="filter-slider" stylesheets="@styles.css"/>
+            <Slider fx:id="ratingSlider" max="10" blockIncrement="0.1" showTickLabels="true" showTickMarks="true"
+                    majorTickUnit="1" minorTickCount="2" styleClass="filter-slider" stylesheets="@styles.css"/>
             <Label fx:id="ratingLable" text="0,0" styleClass="filter-lable" stylesheets="@styles.css"/>
 
-            <JFXButton fx:id="filterBtn" styleClass="background-yellow" stylesheets="@styles.css" text="Filter" minWidth="73"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <JFXButton fx:id="filterBtn" styleClass="background-yellow" stylesheets="@styles.css" text="Filter"
+                       minWidth="73"/>
+            <Region prefWidth="14"/>
         </children>
         <VBox.margin>
             <Insets/>

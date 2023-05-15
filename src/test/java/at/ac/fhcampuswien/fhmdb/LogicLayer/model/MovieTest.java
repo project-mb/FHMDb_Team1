@@ -1,4 +1,4 @@
-package at.ac.fhcampuswien.fhmdb.model;
+package at.ac.fhcampuswien.fhmdb.LogicLayer.model;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

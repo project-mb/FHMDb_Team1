@@ -1,6 +1,6 @@
-package at.ac.fhcampuswien.fhmdb;
+package at.ac.fhcampuswien.fhmdb.LogicLayer;
 
-import at.ac.fhcampuswien.fhmdb.model.Movie;
+import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
 import com.google.gson.Gson;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
