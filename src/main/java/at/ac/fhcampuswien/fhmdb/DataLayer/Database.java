@@ -17,6 +17,7 @@ public class Database {
         this.connectionSource = connectionSource;
         this.dao = dao;
     }
+
     private void createConnectionSource() {
 
     }
@@ -29,7 +30,7 @@ public class Database {
 
     }
 
-//    WatchlistDao getWatchlistDao(){
-//        return null;
-//    }
+    Dao<WatchlistEntity, Long> getWatchlistDao(){
+        return null;
+    }
 }

@@ -1,4 +1,4 @@
 package at.ac.fhcampuswien.fhmdb.LogicLayer;
 
-public class WatchlistView {
+public class WatchlistController {
 }

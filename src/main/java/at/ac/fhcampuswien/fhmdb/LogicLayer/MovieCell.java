@@ -2,7 +2,6 @@ package at.ac.fhcampuswien.fhmdb.LogicLayer;
 
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -18,10 +17,7 @@ public class MovieCell extends ListCell<Movie> {
     private final Button setWatchlist = new Button();
 
     private final Region blank = new Region();
-
-    private final HBox layoutTitle = new HBox(title);
-    private final HBox layoutButtons = new HBox(showDetails, setWatchlist);
-    private final HBox layoutHorizontal = new HBox(layoutTitle, blank, layoutButtons);
+    private final HBox layoutHorizontal = new HBox(title, blank, showDetails, setWatchlist);
     private final VBox layout = new VBox(layoutHorizontal, detail, genres);
 
     @Override
@@ -48,10 +44,7 @@ public class MovieCell extends ListCell<Movie> {
             genres.getStyleClass().add("text-white");
             layout.setBackground(new Background(new BackgroundFill(Color.web("#454545"), null, null)));
 
-            layoutTitle.alignmentProperty().set(Pos.CENTER_LEFT);
             HBox.setHgrow(blank, Priority.ALWAYS);
-            layoutButtons.alignmentProperty().set(Pos.CENTER_RIGHT);
-            layoutButtons.setSpacing(10);
             showDetails.setPrefWidth(100);
             showDetails.textProperty().setValue("Show Details");
             setWatchlist.setPrefWidth(100);
