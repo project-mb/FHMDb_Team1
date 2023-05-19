@@ -1,16 +1,21 @@
 package at.ac.fhcampuswien.fhmdb.DataLayer;
 
+import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.TableUtils;
+
+import java.sql.SQLException;
 
 public class Database {
     private final String DB_URL;
     private final String username;
     private final String password;
     private ConnectionSource connectionSource;
-    private Dao<WatchlistEntity, Long> dao;
+    private Dao<WatchlistMovieEntity, Long> dao;
 
-    public Database(String DB_URL, String username, String password, ConnectionSource connectionSource, Dao<WatchlistEntity, Long> dao) {
+    public Database(String DB_URL, String username, String password, ConnectionSource connectionSource, Dao<WatchlistMovieEntity, Long> dao) {
         this.DB_URL = DB_URL;
         this.username = username;
         this.password = password;
@@ -19,18 +24,22 @@ public class Database {
     }
 
     private void createConnectionSource() {
-
+        connectionSource = new JdbcConnectionSource();
     }
 
     ConnectionSource getConnectionSource() {
-        return null;
+        return connectionSource;
     }
 
     void createTables() {
-
+        try {
+            TableUtils.createTableIfNotExists(connectionSource, Movie.class);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    Dao<WatchlistEntity, Long> getWatchlistDao(){
+    Dao<WatchlistMovieEntity, Long> getWatchlistDao(){
         return null;
     }
 }

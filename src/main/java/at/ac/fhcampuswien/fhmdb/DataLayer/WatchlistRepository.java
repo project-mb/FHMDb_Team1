@@ -5,21 +5,21 @@ import com.j256.ormlite.dao.Dao;
 import java.util.List;
 
 public class WatchlistRepository {
-    private Dao<WatchlistEntity, Long> dao;
+    private Dao<WatchlistMovieEntity, Long> dao;
 
-    public WatchlistRepository(Dao<WatchlistEntity, Long> dao) {
+    public WatchlistRepository(Dao<WatchlistMovieEntity, Long> dao) {
         this.dao = dao;
     }
 
-    void removeFromWatchlist(WatchlistEntity movie) {
+    void removeFromWatchlist(WatchlistMovieEntity movie) {
 
     }
 
-    List<WatchlistEntity> getAll() {
+    List<WatchlistMovieEntity> getAll() {
         return null;
     }
 
-    void addToWatchlist(WatchlistEntity movie) {
+    void addToWatchlist(WatchlistMovieEntity movie) {
 
     }
 }
