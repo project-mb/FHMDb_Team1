@@ -1,4 +1,9 @@
 package at.ac.fhcampuswien.fhmdb.LogicLayer;
 
-public class WatchlistController {
+import javafx.fxml.Initializable;
+
+public class WatchlistController extends HomeController {
+    public WatchlistController() {
+        super();
+    }
 }

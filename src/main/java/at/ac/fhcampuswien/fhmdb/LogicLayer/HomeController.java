@@ -1,19 +1,28 @@
 package at.ac.fhcampuswien.fhmdb.LogicLayer;
 
+import at.ac.fhcampuswien.fhmdb.FhmdbApplication;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
+import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -24,8 +33,6 @@ public class HomeController implements Initializable {
 
     @FXML
     public HBox header;
-    @FXML
-    public JFXComboBox<String> jcb_menu;
 
 
     @FXML
@@ -61,25 +68,6 @@ public class HomeController implements Initializable {
 
         genreComboBox.getItems().addAll(Genre.values());
         genreComboBox.setValue(__NONE__);
-
-        jcb_menu.getItems().add("Home");
-        jcb_menu.getItems().add("Watchlist");
-        jcb_menu.getItems().add("About");
-        jcb_menu.setValue("Home");
-
-        jcb_menu.setOnAction(actionEvent -> {
-            switch (jcb_menu.getValue()) {
-                case "Home" -> {
-                    System.out.println("Home");
-                }
-                case "Watchlist" -> {
-                    System.out.println("Watchlist");
-                }
-                case "About" -> {
-                    System.out.println("About");
-                }
-            }
-        });
 
         // filter button
         filterBtn.setOnAction(actionEvent -> {

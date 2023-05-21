@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<TabPane xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml"
+         fx:controller="at.ac.fhcampuswien.fhmdb.LogicLayer.MainController"
+         prefHeight="400.0" prefWidth="600.0"
+         tabClosingPolicy="UNAVAILABLE"
+         style="-fx-background-color: black">
+    <tabMinWidth>100</tabMinWidth>
+
+    <Tab text="Home">
+        <fx:include source="home-view.fxml"/>
+    </Tab>
+    <Tab text="Watchlist">
+        <fx:include source="watchlist-view.fxml"/>
+    </Tab>
+    <Tab text="About">
+        <fx:include source="about-view.fxml"/>
+    </Tab>
+</TabPane>
