@@ -20,8 +20,6 @@ public class Movie implements Comparable<Movie> {
     public final String[] mainCast;
     public final double rating;
 
-    public boolean isWatchlisted;
-
     public Movie(String id, String title, EnumSet<Genre> genres, int releaseYear, String description, String imgUrl, int lengthInMinutes, String[] directors, String[] writers, String[] mainCast, int rating) {
         this.id = id;
         this.title = title;
@@ -34,7 +32,6 @@ public class Movie implements Comparable<Movie> {
         this.writers = writers;
         this.mainCast = mainCast;
         this.rating = rating;
-        this.isWatchlisted = false;
     }
 
     public Movie(WatchlistEntity watchlistEntity) {
@@ -50,10 +47,19 @@ public class Movie implements Comparable<Movie> {
         this.writers = blank;
         this.mainCast = blank;
         this.rating = watchlistEntity.getRating();
-        this.isWatchlisted = watchlistEntity.isWatchlisted();
     }
 
+    public String getId() { return id; }
     public String getTitle() { return title; }
+    public EnumSet<Genre> getGenres() { return genres; }
+    public int getReleaseYear() { return releaseYear; }
+    public String getDescription() { return description; }
+    public String getImgUrl() { return imgUrl; }
+    public int getLengthInMinutes() { return lengthInMinutes; }
+    public String[] getDirectors() { return directors; }
+    public String[] getWriters() { return writers; }
+    public String[] getMainCast() { return mainCast; }
+    public double getRating() { return rating; }
 
     public static List<Movie> initializeMovies() {
         List<Movie> movies = MovieAPI.get(MovieAPI.MOVIES_ENDPOINT);

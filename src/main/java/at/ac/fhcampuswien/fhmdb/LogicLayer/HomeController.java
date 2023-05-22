@@ -1,6 +1,16 @@
 package at.ac.fhcampuswien.fhmdb.LogicLayer;
 
+import at.ac.fhcampuswien.fhmdb.DataLayer.WatchlistEntity;
+import at.ac.fhcampuswien.fhmdb.DataLayer.WatchlistRepository;
+import at.ac.fhcampuswien.fhmdb.LogicLayer.model.ClickEventHandler;
+import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
+import at.ac.fhcampuswien.fhmdb.PresentationLayer.MovieCell;
+import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
+import at.ac.fhcampuswien.fhmdb.exceptions.DatabaseException;
+import javafx.scene.control.Alert;
+
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class HomeController extends BaseController {
@@ -10,6 +20,31 @@ public class HomeController extends BaseController {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
         sortMoviesWithOther(allMovies);
+
+        movieListView.setItems(observableMovies);   // set data of observable list to list view
+        movieListView.setCellFactory(movieListView -> new MovieCell(onAddToWatchlistClicked, "Watchlist")); // use custom cell factory to display data
+
         observableMovies.setAll(allMovies);
+
+        // filter button
+        filterBtn.setOnAction(actionEvent -> {
+            var test = MovieAPI.get(MovieAPI.MOVIES_ENDPOINT, searchField.getText(), genreComboBox.getValue().toString());
+            if (test != null) allMovies = test;
+
+            filteredMovies = new ArrayList<>(getMoviesFiltered(allMovies, searchField.getText(), genreComboBox.getValue(), 0, 0));
+            sortMoviesWithCurrent(filteredMovies);
+            observableMovies.setAll(filteredMovies);
+            movieListView.setCellFactory(movieListView -> new MovieCell(onAddToWatchlistClicked, "Watchlist"));
+        });
     }
+
+    private final ClickEventHandler onAddToWatchlistClicked = (clickedItem) -> {
+        try {
+            WatchlistRepository wrap = new WatchlistRepository();
+            wrap.addToWatchlist(new WatchlistEntity((Movie) clickedItem));
+        } catch(DatabaseException dbe) {
+            BaseController.notifyUser(dbe, Alert.AlertType.ERROR);
+        }
+
+    };
 }

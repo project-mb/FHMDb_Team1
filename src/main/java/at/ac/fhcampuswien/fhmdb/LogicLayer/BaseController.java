@@ -2,8 +2,6 @@ package at.ac.fhcampuswien.fhmdb.LogicLayer;
 
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
-import at.ac.fhcampuswien.fhmdb.PresentationLayer.MovieCell;
-import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
@@ -11,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -45,23 +44,8 @@ public class BaseController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // initialize UI stuff
-        movieListView.setItems(observableMovies);   // set data of observable list to list view
-        movieListView.setCellFactory(movieListView -> new MovieCell()); // use custom cell factory to display data
-
         genreComboBox.getItems().addAll(Genre.values());
         genreComboBox.setValue(__NONE__);
-
-        // filter button
-        filterBtn.setOnAction(actionEvent -> {
-            var test = MovieAPI.get(MovieAPI.MOVIES_ENDPOINT, searchField.getText(), genreComboBox.getValue().toString());
-            if (test != null) allMovies = test;
-
-            filteredMovies = new ArrayList<>(getMoviesFiltered(searchField.getText(), genreComboBox.getValue(), 0, 0));
-            sortMoviesWithCurrent(filteredMovies);
-            observableMovies.setAll(filteredMovies);
-            movieListView.setCellFactory(movieListView -> new MovieCell());
-        });
 
         // sort button
         sortBtn.setOnAction(actionEvent -> {
@@ -89,8 +73,8 @@ public class BaseController implements Initializable {
         });
     }
 
-    public List<Movie> getMoviesFiltered(String searchQuery, Genre genreFilter, int releaseYearFilter, int ratingFilter) {
-        List<Movie> filteredByRating = getMoviesByRating(allMovies, ratingFilter);
+    public List<Movie> getMoviesFiltered(List<Movie> moviesToFilter, String searchQuery, Genre genreFilter, int releaseYearFilter, int ratingFilter) {
+        List<Movie> filteredByRating = getMoviesByRating(moviesToFilter, ratingFilter);
         List<Movie> filteredByReleaseYear = getMoviesByReleaseYear(filteredByRating, releaseYearFilter);
         List<Movie> filteredByGenre = getMoviesByGenre(filteredByReleaseYear, genreFilter);
 
@@ -176,7 +160,12 @@ public class BaseController implements Initializable {
         movies.sort(Comparator.comparing(Movie::getTitle));
     }
 
-    protected void sortDescending(List<Movie> movies) {
-        movies.sort(Comparator.comparing(Movie::getTitle).reversed());
+    protected void sortDescending(List<Movie> movies) { movies.sort(Comparator.comparing(Movie::getTitle).reversed()); }
+
+    public static void notifyUser(Exception e, Alert.AlertType type) {
+        Alert userAlert = new Alert(type);
+        userAlert.setTitle("!Error (notify admin)");
+        userAlert.setContentText(String.valueOf(e));
+        userAlert.showAndWait();
     }
 }
