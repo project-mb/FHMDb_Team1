@@ -1,4 +1,4 @@
-package at.ac.fhcampuswien.fhmdb.LogicLayer;
+package at.ac.fhcampuswien.fhmdb.api;
 
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
 import org.junit.jupiter.api.Nested;

@@ -1,5 +1,6 @@
-package at.ac.fhcampuswien.fhmdb.LogicLayer;
+package at.ac.fhcampuswien.fhmdb.PresentationLayer;
 
+import at.ac.fhcampuswien.fhmdb.LogicLayer.model.ClickEventHandler;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -14,11 +15,16 @@ public class MovieCell extends ListCell<Movie> {
     private final Label detail = new Label();
     private final Label genres = new Label();
     private final Button showDetails = new Button();
-    private final Button setWatchlist = new Button();
+    private final Button bt_setWatchlist = new Button();
 
     private final Region blank = new Region();
-    private final HBox layoutHorizontal = new HBox(title, blank, showDetails, setWatchlist);
+    private final HBox layoutHorizontal = new HBox(title, blank, showDetails, bt_setWatchlist);
     private final VBox layout = new VBox(layoutHorizontal, detail, genres);
+    public MovieCell(ClickEventHandler onClicked_addToWatchlist, String remove) {
+        super();
+        bt_setWatchlist.setOnMouseClicked(mouseEvent -> onClicked_addToWatchlist.onCLick(getItem()));
+        bt_setWatchlist.setText(remove);
+    }
 
     @Override
     protected void updateItem(Movie movie, boolean empty) {
@@ -47,8 +53,8 @@ public class MovieCell extends ListCell<Movie> {
             HBox.setHgrow(blank, Priority.ALWAYS);
             showDetails.setPrefWidth(100);
             showDetails.textProperty().setValue("Show Details");
-            setWatchlist.setPrefWidth(100);
-            setWatchlist.textProperty().setValue("Watchlist");
+            bt_setWatchlist.setPrefWidth(100);
+            bt_setWatchlist.textProperty().setValue("Watchlist");
 
             // layout
             title.fontProperty().set(Font.font(20));

@@ -6,16 +6,19 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class FhmdbApplication extends Application {
+    private static final int WINDOW_WIDTH = 2048;
+    private static final int WINDOW_HEIGHT = 1024;
+
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(FhmdbApplication.class.getResource("home-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 2048, 1024);
-        scene.getStylesheets().add(Objects.requireNonNull(FhmdbApplication.class.getResource("styles.css")).toExternalForm());
+        FXMLLoader mainLoader = new FXMLLoader(FhmdbApplication.class.getResource("main-view.fxml"));
+
+        Scene mainScene = new Scene(mainLoader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
+
         stage.setTitle("FHMDb");
-        stage.setScene(scene);
+        stage.setScene(mainScene);
         stage.show();
     }
 
