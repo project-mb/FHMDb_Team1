@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.fhmdb.LogicLayer.model;
 
-import at.ac.fhcampuswien.fhmdb.LogicLayer.MovieAPI;
+import at.ac.fhcampuswien.fhmdb.DataLayer.WatchlistEntity;
+import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
 
 import java.util.*;
 
@@ -17,7 +18,7 @@ public class Movie implements Comparable<Movie> {
     public final String[] directors;
     public final String[] writers;
     public final String[] mainCast;
-    public final float rating;
+    public final double rating;
 
     public boolean isWatchlisted;
 
@@ -33,6 +34,23 @@ public class Movie implements Comparable<Movie> {
         this.writers = writers;
         this.mainCast = mainCast;
         this.rating = rating;
+        this.isWatchlisted = false;
+    }
+
+    public Movie(WatchlistEntity watchlistEntity) {
+        String[] blank = {" "};
+        this.id = watchlistEntity.getApild();
+        this.title = watchlistEntity.getTitle();
+        this.genres = stringToGenres(watchlistEntity.getGenres());
+        this.releaseYear = watchlistEntity.getReleaseYear();
+        this.description = watchlistEntity.getDescription();
+        this.imgUrl = watchlistEntity.getImgUrl();
+        this.lengthInMinutes = watchlistEntity.getLengthInMinutes();
+        this.directors = blank;
+        this.writers = blank;
+        this.mainCast = blank;
+        this.rating = watchlistEntity.getRating();
+        this.isWatchlisted = watchlistEntity.isWatchlisted();
     }
 
     public String getTitle() { return title; }
@@ -40,15 +58,21 @@ public class Movie implements Comparable<Movie> {
     public static List<Movie> initializeMovies() {
         List<Movie> movies = MovieAPI.get(MovieAPI.MOVIES_ENDPOINT);
 
-        if(movies == null) {
+        if (movies == null) {
             movies = new ArrayList<>();
-            movies.add(new Movie("id0" ,"title0", EnumSet.of(__NONE__), 0, "des0", "imgUrl0", 0, new String[]{"director01", "director02"}, new String[]{"writer01", "writer02"}, new String[]{"mainCast01", "mainCast02"}, 0));
-            movies.add(new Movie("id1" ,"title1", EnumSet.of(ACTION), 1111, "des1", "imgUrl1", 1, new String[]{"director11", "director12"}, new String[]{"writer11", "writer12"}, new String[]{"mainCast11", "mainCast12"}, 1));
-            movies.add(new Movie("id2" ,"title2", EnumSet.of(BIOGRAPHY, ANIMATION), 2222, "des2", "imgUrl2", 2, new String[]{"director21", "director22"}, new String[]{"writer21", "writer22"}, new String[]{"mainCast21", "mainCast22"}, 2));
-            movies.add(new Movie("id3" ,"title3", EnumSet.of(ADVENTURE, CRIME, ROMANCE), 3333, "des3", "imgUrl3", 3, new String[]{"director31", "director32"}, new String[]{"writer31", "writer32"}, new String[]{"mainCast31", "mainCast32"}, 3));
+            movies.add(new Movie("id0", "title0", EnumSet.of(__NONE__), 0, "des0", "imgUrl0", 0, new String[]{"director01", "director02"}, new String[]{"writer01", "writer02"}, new String[]{"mainCast01", "mainCast02"}, 0));
+            movies.add(new Movie("id1", "title1", EnumSet.of(ACTION), 1111, "des1", "imgUrl1", 1, new String[]{"director11", "director12"}, new String[]{"writer11", "writer12"}, new String[]{"mainCast11", "mainCast12"}, 1));
+            movies.add(new Movie("id2", "title2", EnumSet.of(BIOGRAPHY, ANIMATION), 2222, "des2", "imgUrl2", 2, new String[]{"director21", "director22"}, new String[]{"writer21", "writer22"}, new String[]{"mainCast21", "mainCast22"}, 2));
+            movies.add(new Movie("id3", "title3", EnumSet.of(ADVENTURE, CRIME, ROMANCE), 3333, "des3", "imgUrl3", 3, new String[]{"director31", "director32"}, new String[]{"writer31", "writer32"}, new String[]{"mainCast31", "mainCast32"}, 3));
         }
 
         return movies;
+    }
+
+    public EnumSet<Genre> stringToGenres(String s) {
+        String[] array = s.split(", ");
+
+        return EnumSet.copyOf(Arrays.stream(array).map(Genre::valueOf).toList());
     }
 
     @Override

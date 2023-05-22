@@ -5,8 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<VBox prefHeight="331.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="at.ac.fhcampuswien.fhmdb.LogicLayer.AboutController">
+<VBox prefHeight="331.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/15.0.1">
     <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="347.0" spacing="20.0"
           style="-fx-background-color: black;">
         <padding>
@@ -21,11 +20,11 @@
                 <Insets left="2.0" right="2.0"/>
             </padding>
         </Label>
-        <Label styleClass="text-white" stylesheets="@styles.css" text="Welcome to FHMDb!"/>
+        <Label styleClass="text-white" stylesheets="@styles.css" text="About!"/>
     </HBox>
-    <VBox style="-fx-text-fill: white">
-        <Label style="-fx-font-size: 32">Authors</Label>
-        <Label style="-fx-font-size: 28">Manuel</Label>
-        <Label style="-fx-font-size: 28">Eduard</Label>
+    <VBox>
+        <Label style="-fx-font-size: 32;-fx-text-fill: white">Authors</Label>
+        <Label style="-fx-font-size: 28;-fx-text-fill: white">Manuel Frühstück</Label>
+        <Label style="-fx-font-size: 28;-fx-text-fill: white">Eduard Michael Tif</Label>
     </VBox>
 </VBox>

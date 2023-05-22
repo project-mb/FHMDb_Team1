@@ -1,9 +1,18 @@
 package at.ac.fhcampuswien.fhmdb.LogicLayer;
 
-import javafx.fxml.Initializable;
+import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
 
-public class WatchlistController extends HomeController {
-    public WatchlistController() {
-        super();
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+
+public class WatchlistController extends BaseController {
+    public List<Movie> watchlistMovies = new ArrayList<>();
+    public WatchlistController() { super(); }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        super.initialize(url, resourceBundle);
+        observableMovies.setAll(watchlistMovies);
     }
 }

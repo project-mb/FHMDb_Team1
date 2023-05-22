@@ -1,4 +1,4 @@
-package at.ac.fhcampuswien.fhmdb.LogicLayer;
+package at.ac.fhcampuswien.fhmdb.PresentationLayer;
 
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
 import javafx.geometry.Insets;

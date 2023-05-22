@@ -27,6 +27,8 @@ public class WatchlistEntity {
     @DatabaseField(columnName = "rating")
     private double rating;
 
+    private boolean isWatchlisted;
+
 
     public long getId() { return id; }
     public String getApild() { return apild; }
@@ -37,6 +39,7 @@ public class WatchlistEntity {
     public String getImgUrl() { return imgUrl; }
     public int getLengthInMinutes() { return lengthInMinutes; }
     public double getRating() { return rating; }
+    public boolean isWatchlisted() { return isWatchlisted; }
 
     public String genresToString(List<Genre> genres) {
         StringBuilder out = new StringBuilder();
