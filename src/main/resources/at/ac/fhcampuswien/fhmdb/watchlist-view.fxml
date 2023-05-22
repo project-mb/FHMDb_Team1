@@ -23,9 +23,6 @@
         <Label styleClass="text-white" stylesheets="@styles.css" text="Your Watchlist!"/>
     </HBox>
     <HBox spacing="5.0" styleClass="background-black" stylesheets="@styles.css">
-        <VBox.margin>
-            <Insets/>
-        </VBox.margin>
         <padding>
             <Insets bottom="20.0" left="10.0" top="20.0"/>
         </padding>

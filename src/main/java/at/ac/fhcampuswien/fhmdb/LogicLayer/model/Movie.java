@@ -8,17 +8,19 @@ import java.util.*;
 import static at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre.*;
 
 public class Movie implements Comparable<Movie> {
-    public final String id;
-    public final String title;
-    public final EnumSet<Genre> genres;
-    public final int releaseYear;
-    public final String description;
-    public final String imgUrl;
-    public final int lengthInMinutes;
-    public final String[] directors;
-    public final String[] writers;
-    public final String[] mainCast;
-    public final double rating;
+    public String id;
+    public String title;
+    public EnumSet<Genre> genres;
+    public int releaseYear;
+    public String description;
+    public String imgUrl;
+    public int lengthInMinutes;
+    public String[] directors;
+    public String[] writers;
+    public String[] mainCast;
+    public double rating;
+
+    public Movie() { }
 
     public Movie(String id, String title, EnumSet<Genre> genres, int releaseYear, String description, String imgUrl, int lengthInMinutes, String[] directors, String[] writers, String[] mainCast, int rating) {
         this.id = id;
@@ -76,9 +78,11 @@ public class Movie implements Comparable<Movie> {
     }
 
     public EnumSet<Genre> stringToGenres(String s) {
-        String[] array = s.split(", ");
+        String[] array = s.split(",");
+        List<Genre> genres = Arrays.stream(array).map(Genre::valueOf).toList();
+        System.out.println(genres);
 
-        return EnumSet.copyOf(Arrays.stream(array).map(Genre::valueOf).toList());
+        return EnumSet.copyOf(genres);
     }
 
     @Override
@@ -92,10 +96,6 @@ public class Movie implements Comparable<Movie> {
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
         return Objects.equals(title, movie.title) && Objects.equals(description, movie.description) && Objects.equals(genres, movie.genres);
-    }
-    @Override
-    public int hashCode() {
-        return Objects.hash(title, description, genres);
     }
 
     @Override

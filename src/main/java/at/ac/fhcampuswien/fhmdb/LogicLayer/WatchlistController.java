@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class WatchlistController extends BaseController {
     public List<Movie> watchlistMovies = new ArrayList<>();
@@ -23,12 +24,11 @@ public class WatchlistController extends BaseController {
 
         try {
             WatchlistRepository wrap = new WatchlistRepository();
-            if(wrap.getAll() != null) watchlistMovies.addAll(wrap.getAll().stream().map(Movie::new).toList());
+            watchlistMovies.addAll(wrap.getAll().stream().map(Movie::new).toList());
+            observableMovies.addAll(watchlistMovies);
         } catch (DatabaseException dbe) {
             BaseController.notifyUser(dbe, Alert.AlertType.ERROR);
         }
-
-        observableMovies.setAll(watchlistMovies);
 
         movieListView.setItems(observableMovies);   // set data of observable list to list view
         movieListView.setCellFactory(movieListView -> new MovieCell(onClicked_removeMovieFromWatchlist, "Remove")); // use custom cell factory to display data
@@ -45,11 +45,11 @@ public class WatchlistController extends BaseController {
         });
     }
 
-    private final ClickEventHandler onClicked_removeMovieFromWatchlist = (source) -> {
+    private final ClickEventHandler onClicked_removeMovieFromWatchlist = (clickedItem) -> {
         try {
             WatchlistRepository wrap = new WatchlistRepository();
-            wrap.removeFromWatchlist(new WatchlistEntity((Movie) source));
-            observableMovies.remove((Movie) source);
+            wrap.removeFromWatchlist(new WatchlistEntity((Movie) clickedItem));
+            observableMovies.remove((Movie) clickedItem);
         } catch (DatabaseException dbe) {
             notifyUser(dbe, Alert.AlertType.ERROR);
         }

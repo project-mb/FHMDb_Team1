@@ -5,29 +5,33 @@ import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.Objects;
 
-@DatabaseTable(tableName = "watchlist")
+@DatabaseTable(tableName = "Watchlist")
 public class WatchlistEntity {
     @DatabaseField(generatedId = true)
-    private long id;
+    public long id;
     @DatabaseField()
-    private final String apild;
+    public String apild;
     @DatabaseField()
-    private final String title;
+    public String title;
     @DatabaseField()
-    private final String description;
+    public String description;
     @DatabaseField()
-    private final String genres;
+    public String genres;
     @DatabaseField()
-    private final int releaseYear;
+    public int releaseYear;
     @DatabaseField()
-    private final String imgUrl;
+    public String imgUrl;
     @DatabaseField()
-    private final int lengthInMinutes;
+    public int lengthInMinutes;
     @DatabaseField()
-    private final double rating;
+    public double rating;
+
+
+    public WatchlistEntity() { }
 
     public WatchlistEntity(Movie movie) {
         this.apild = movie.getId();
@@ -62,7 +66,6 @@ public class WatchlistEntity {
 
         return out.toString();
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -71,5 +74,19 @@ public class WatchlistEntity {
         WatchlistEntity that = (WatchlistEntity) o;
 
         return Objects.equals(this.title, that.title);
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", genres=" + genres +
+                ", releaseYear=" + releaseYear +
+                ", description='" + description + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", lengthInMinutes=" + lengthInMinutes +
+                ", rating=" + rating +
+                '}';
     }
 }

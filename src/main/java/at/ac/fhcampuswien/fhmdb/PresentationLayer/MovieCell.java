@@ -2,6 +2,7 @@ package at.ac.fhcampuswien.fhmdb.PresentationLayer;
 
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.ClickEventHandler;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
+import com.jfoenix.controls.JFXButton;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

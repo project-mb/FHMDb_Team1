@@ -21,10 +21,10 @@ public class HomeController extends BaseController {
         super.initialize(url, resourceBundle);
         sortMoviesWithOther(allMovies);
 
-        movieListView.setItems(observableMovies);   // set data of observable list to list view
-        movieListView.setCellFactory(movieListView -> new MovieCell(onAddToWatchlistClicked, "Watchlist")); // use custom cell factory to display data
+        observableMovies.addAll(allMovies);
 
-        observableMovies.setAll(allMovies);
+        movieListView.setItems(observableMovies);   // set data of observable list to list view
+        movieListView.setCellFactory(movieListView -> new MovieCell(onClicked_addToWatchlist, "Watchlist")); // use custom cell factory to display data
 
         // filter button
         filterBtn.setOnAction(actionEvent -> {
@@ -34,12 +34,13 @@ public class HomeController extends BaseController {
             filteredMovies = new ArrayList<>(getMoviesFiltered(allMovies, searchField.getText(), genreComboBox.getValue(), 0, 0));
             sortMoviesWithCurrent(filteredMovies);
             observableMovies.setAll(filteredMovies);
-            movieListView.setCellFactory(movieListView -> new MovieCell(onAddToWatchlistClicked, "Watchlist"));
+            //movieListView.setCellFactory(movieListView -> new MovieCell(onClicked_addToWatchlist, "Watchlist"));
         });
     }
 
-    private final ClickEventHandler onAddToWatchlistClicked = (clickedItem) -> {
+    private final ClickEventHandler onClicked_addToWatchlist = (clickedItem) -> {
         try {
+            System.out.println("clicked: " + clickedItem.toString());
             WatchlistRepository wrap = new WatchlistRepository();
             wrap.addToWatchlist(new WatchlistEntity((Movie) clickedItem));
         } catch(DatabaseException dbe) {
