@@ -34,17 +34,16 @@ public class HomeController extends BaseController {
             filteredMovies = new ArrayList<>(getMoviesFiltered(allMovies, searchField.getText(), genreComboBox.getValue(), 0, 0));
             sortMoviesWithCurrent(filteredMovies);
             observableMovies.setAll(filteredMovies);
-            //movieListView.setCellFactory(movieListView -> new MovieCell(onClicked_addToWatchlist, "Watchlist"));
+            movieListView.setCellFactory(movieListView -> new MovieCell(onClicked_addToWatchlist, "Watchlist"));
         });
     }
 
-    private final ClickEventHandler onClicked_addToWatchlist = (clickedItem) -> {
+    private final ClickEventHandler<Movie> onClicked_addToWatchlist = (clickedMovie) -> {
         try {
-            System.out.println("clicked: " + clickedItem.toString());
             WatchlistRepository wrap = new WatchlistRepository();
-            wrap.addToWatchlist(new WatchlistEntity((Movie) clickedItem));
-        } catch(DatabaseException dbe) {
-            BaseController.notifyUser(dbe, Alert.AlertType.ERROR);
+            wrap.addToWatchlist(new WatchlistEntity(clickedMovie));
+        } catch (DatabaseException dbe) {
+            notifyUser(dbe, Alert.AlertType.ERROR);
         }
 
     };

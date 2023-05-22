@@ -13,11 +13,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 public class WatchlistController extends BaseController {
     public List<Movie> watchlistMovies = new ArrayList<>();
     public WatchlistController() { super(); }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
@@ -45,11 +45,11 @@ public class WatchlistController extends BaseController {
         });
     }
 
-    private final ClickEventHandler onClicked_removeMovieFromWatchlist = (clickedItem) -> {
+    private final ClickEventHandler<Movie> onClicked_removeMovieFromWatchlist = (clickedMovie) -> {
         try {
             WatchlistRepository wrap = new WatchlistRepository();
-            wrap.removeFromWatchlist(new WatchlistEntity((Movie) clickedItem));
-            observableMovies.remove((Movie) clickedItem);
+            wrap.removeFromWatchlist(new WatchlistEntity(clickedMovie));
+            observableMovies.remove(clickedMovie);
         } catch (DatabaseException dbe) {
             notifyUser(dbe, Alert.AlertType.ERROR);
         }

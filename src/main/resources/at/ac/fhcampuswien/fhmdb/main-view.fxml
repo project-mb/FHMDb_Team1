@@ -9,13 +9,13 @@
          style="-fx-background-color: black">
     <tabMinWidth>100</tabMinWidth>
 
-    <Tab text="Home">
+    <Tab fx:id="ti_home" text="Home">
         <fx:include source="home-view.fxml"/>
     </Tab>
-    <Tab text="Watchlist">
+    <Tab fx:id="ti_watchlist" text="Watchlist">
         <fx:include source="watchlist-view.fxml"/>
     </Tab>
-    <Tab text="About">
+    <Tab fx:id="ti_about" text="About">
         <fx:include source="about-view.fxml"/>
     </Tab>
 </TabPane>
