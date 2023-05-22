@@ -5,26 +5,29 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-
 import java.sql.SQLException;
 
 public class Database {
-    private final String DB_URL;
-    private final String username;
-    private final String password;
+    private String DB_URL = "jdbc:h2:file:./data/myDB";
+    private String username = "admin";
+    private String password = "admin";
     private ConnectionSource connectionSource;
-    private Dao<WatchlistMovieEntity, Long> dao;
+    private Dao<WatchlistEntity, Long> dao;
 
-    public Database(String DB_URL, String username, String password, ConnectionSource connectionSource, Dao<WatchlistMovieEntity, Long> dao) {
-        this.DB_URL = DB_URL;
-        this.username = username;
-        this.password = password;
+    public Database(/*String DB_URL, String username, String password, */ConnectionSource connectionSource, Dao<WatchlistEntity, Long> dao) {
+        //this.DB_URL = DB_URL;
+        //this.username = username;
+        //this.password = password;
         this.connectionSource = connectionSource;
         this.dao = dao;
     }
 
     private void createConnectionSource() {
-        connectionSource = new JdbcConnectionSource();
+        try {
+            connectionSource = new JdbcConnectionSource(DB_URL, username, password);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     ConnectionSource getConnectionSource() {
@@ -39,7 +42,7 @@ public class Database {
         }
     }
 
-    Dao<WatchlistMovieEntity, Long> getWatchlistDao(){
-        return null;
+    Dao<WatchlistEntity, Long> getWatchlistDao(){
+        return dao;
     }
 }

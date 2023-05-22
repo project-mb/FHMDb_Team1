@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.util.List;
 
 @DatabaseTable(tableName = "watchlist")
-public class WatchlistMovieEntity {
+public class WatchlistEntity {
     @DatabaseField(id = true)
     private long id;
     @DatabaseField(columnName = "apild")
