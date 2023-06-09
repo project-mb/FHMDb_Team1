@@ -40,7 +40,7 @@ public class HomeController extends BaseController {
 
     private final ClickEventHandler<Movie> onClicked_addToWatchlist = (clickedMovie) -> {
         try {
-            WatchlistRepository wrap = new WatchlistRepository();
+            WatchlistRepository wrap = WatchlistRepository.getInstance();
             wrap.addToWatchlist(new WatchlistEntity(clickedMovie));
         } catch (DatabaseException dbe) {
             notifyUser(dbe, Alert.AlertType.ERROR);

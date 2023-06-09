@@ -2,16 +2,20 @@ package at.ac.fhcampuswien.fhmdb.DataLayer;
 
 import at.ac.fhcampuswien.fhmdb.exceptions.DatabaseException;
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Objects;
 
 public class WatchlistRepository {
-    private final Dao<WatchlistEntity, Long> dao;
+    private static WatchlistRepository _instance;
+    private WatchlistRepository() { this.dao = Database.getDatabase().getWatchlistDao(); }
 
-    public WatchlistRepository() { this.dao = Database.getDatabase().getWatchlistDao(); }
+    public static WatchlistRepository getInstance() {
+        if (_instance == null) _instance = new WatchlistRepository();
+        return _instance;
+    }
+
+    private final Dao<WatchlistEntity, Long> dao;
 
     public List<WatchlistEntity> getAll() {
         try {
@@ -22,7 +26,6 @@ public class WatchlistRepository {
     }
 
     private WatchlistEntity checkIfExists(WatchlistEntity movie) {
-        List<WatchlistEntity> allEntities = getAll();
         for (WatchlistEntity e : getAll()) {
             if (e.equals(movie)) return e;
         }
@@ -36,7 +39,7 @@ public class WatchlistRepository {
             List<WatchlistEntity> entities = dao.queryForAll();
             for (WatchlistEntity entity : entities) {
                 if (entity.equals(movie)) {
-                    throw  new DatabaseException("Movie already in watchlist");
+                    throw new DatabaseException("Movie already in watchlist");
                 }
             }
             dao.create(movie);

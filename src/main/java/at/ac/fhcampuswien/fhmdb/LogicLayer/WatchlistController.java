@@ -23,7 +23,7 @@ public class WatchlistController extends BaseController {
         super.initialize(url, resourceBundle);
 
         try {
-            WatchlistRepository wrap = new WatchlistRepository();
+            WatchlistRepository wrap = WatchlistRepository.getInstance();
             watchlistMovies.addAll(wrap.getAll().stream().map(Movie::new).toList());
             observableMovies.addAll(watchlistMovies);
         } catch (DatabaseException dbe) {
@@ -47,7 +47,7 @@ public class WatchlistController extends BaseController {
 
     private final ClickEventHandler<Movie> onClicked_removeMovieFromWatchlist = (clickedMovie) -> {
         try {
-            WatchlistRepository wrap = new WatchlistRepository();
+            WatchlistRepository wrap = WatchlistRepository.getInstance();
             wrap.removeFromWatchlist(new WatchlistEntity(clickedMovie));
             observableMovies.remove(clickedMovie);
         } catch (DatabaseException dbe) {
