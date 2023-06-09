@@ -7,6 +7,8 @@ import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
 import at.ac.fhcampuswien.fhmdb.PresentationLayer.MovieCell;
 import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
 import at.ac.fhcampuswien.fhmdb.exceptions.DatabaseException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
 import java.net.URL;
@@ -16,6 +18,9 @@ import java.util.ResourceBundle;
 
 public class WatchlistController extends BaseController {
     public List<Movie> watchlistMovies = new ArrayList<>();
+    public List<Movie> filteredWatchlistMovies = new ArrayList<>();
+    public ObservableList<Movie> observableWatchlistMovies = FXCollections.observableArrayList();
+
     public WatchlistController() { super(); }
 
     @Override
@@ -25,12 +30,12 @@ public class WatchlistController extends BaseController {
         try {
             WatchlistRepository wrap = new WatchlistRepository();
             watchlistMovies.addAll(wrap.getAll().stream().map(Movie::new).toList());
-            observableMovies.addAll(watchlistMovies);
+            observableWatchlistMovies.addAll(watchlistMovies);
         } catch (DatabaseException dbe) {
             BaseController.notifyUser(dbe, Alert.AlertType.ERROR);
         }
 
-        movieListView.setItems(observableMovies);   // set data of observable list to list view
+        movieListView.setItems(observableWatchlistMovies);   // set data of observable list to list view
         movieListView.setCellFactory(movieListView -> new MovieCell(onClicked_removeMovieFromWatchlist, "Remove")); // use custom cell factory to display data
 
         // filter button
@@ -38,9 +43,10 @@ public class WatchlistController extends BaseController {
             var test = MovieAPI.get(MovieAPI.MOVIES_ENDPOINT, searchField.getText(), genreComboBox.getValue());
             if (test != null) allMovies = test;
 
-            filteredMovies = new ArrayList<>(getMoviesFiltered(watchlistMovies, searchField.getText(), genreComboBox.getValue(), 0, 0));
-            sortMoviesWithCurrent(filteredMovies);
-            observableMovies.setAll(filteredMovies);
+            filteredWatchlistMovies = new ArrayList<>(getMoviesFiltered(watchlistMovies, searchField.getText(), genreComboBox.getValue(), 0, 0));
+            sorter.setMovieList(filteredWatchlistMovies);
+            sorter.state.onCurrent();
+            observableWatchlistMovies.setAll(filteredWatchlistMovies);
             movieListView.setCellFactory(movieListView -> new MovieCell(onClicked_removeMovieFromWatchlist, "Remove"));
         });
     }
@@ -49,7 +55,7 @@ public class WatchlistController extends BaseController {
         try {
             WatchlistRepository wrap = new WatchlistRepository();
             wrap.removeFromWatchlist(new WatchlistEntity(clickedMovie));
-            observableMovies.remove(clickedMovie);
+            observableWatchlistMovies.remove(clickedMovie);
         } catch (DatabaseException dbe) {
             notifyUser(dbe, Alert.AlertType.ERROR);
         }
