@@ -1,5 +1,9 @@
 package at.ac.fhcampuswien.fhmdb.api;
 
+import static at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre.*;
+
+//import at.ac.fhcampuswien.fhmdb.BaseTest;
+//import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -32,7 +36,7 @@ public class MovieAPITest {
 //        }
 
         @Test
-        void requestGenerator_queryOnlyWithGenreIsNONE() {
+        void requestGenerator_queryOnly_withGenreIs_NONE() {
             String expected = queryTest;
 
             String actual = MovieAPI.requestGenerator(MovieAPI.MOVIES_ENDPOINT, "The Godfather", __NONE__, "", "");

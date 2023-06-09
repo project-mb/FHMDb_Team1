@@ -35,7 +35,7 @@ public class WatchlistController extends BaseController {
 
         // filter button
         filterBtn.setOnAction(actionEvent -> {
-            var test = MovieAPI.get(MovieAPI.MOVIES_ENDPOINT, searchField.getText(), genreComboBox.getValue().toString());
+            var test = MovieAPI.get(MovieAPI.MOVIES_ENDPOINT, searchField.getText(), genreComboBox.getValue());
             if (test != null) allMovies = test;
 
             filteredMovies = new ArrayList<>(getMoviesFiltered(watchlistMovies, searchField.getText(), genreComboBox.getValue(), 0, 0));

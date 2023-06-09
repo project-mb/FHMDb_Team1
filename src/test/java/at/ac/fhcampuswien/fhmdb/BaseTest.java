@@ -2,6 +2,8 @@ package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.LogicLayer.HomeController;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
+import javafx.scene.control.Alert;
+import org.junit.jupiter.api.parallel.Resources;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -27,9 +29,11 @@ public class BaseTest {
         testMovies.add(new Movie("id4", "title4", EnumSet.of(__NONE__), 4444, "des4", "imgUrl4", 4, new String[]{"director41", "director42"}, new String[]{"writer41", "writer42"}, new String[]{"mainCast41", "mainCast41"}, 4));
         testMovies.add(new Movie("id5", "title5long", EnumSet.of(__NONE__), 5555, "des5", "imgUrl5", 5, new String[]{"director41", "director42"}, new String[]{"writer41", "writer42"}, new String[]{"mainCast41", "mainCast41"}, 5));
 
-        jsonTest = importJson("D:\\Studium\\FHCampusWien\\2_Sommersemester2023\\Prog2\\UE\\Exercise2\\src\\test\\resources\\jsonTest.json");
-        queryTest = importJson("D:\\Studium\\FHCampusWien\\2_Sommersemester2023\\Prog2\\UE\\Exercise2\\src\\test\\resources\\queryTest.json");
-        genreTest = importJson("D:\\Studium\\FHCampusWien\\2_Sommersemester2023\\Prog2\\UE\\Exercise2\\src\\test\\resources\\genreTest.json");
+        System.out.println("Test " + System.getProperty("user.dir"));
+
+        jsonTest = importJson(System.getProperty("user.dir") + "\\target\\test-classes\\jsonTest.json");
+        queryTest = importJson(System.getProperty("user.dir") + "\\target\\test-classes\\queryTest.json");
+        genreTest = importJson(System.getProperty("user.dir") + "\\target\\test-classes\\genreTest.json");
     }
 
     private static String importJson(String path){
