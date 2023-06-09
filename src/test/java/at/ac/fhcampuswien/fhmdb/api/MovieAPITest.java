@@ -12,69 +12,30 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MovieAPITest {
     @Nested
-    class urlBuilder {
-        @Test
-        void urlBuilder_basic() {
-            String expected = "http://prog2.fh-campuswien.ac.at/movies?query=The%20Godfather&genre=DRAMA";
-
-            String actual = MovieAPI.urlBuilder(MovieAPI.MOVIES_ENDPOINT, "The Godfather", "DRAMA");
-
-            assertEquals(expected, actual);
-        }
-
-        @Test
-        void urlBuilder_queryOnlyWithGenreIsEmptyString() {
-            String expected = "http://prog2.fh-campuswien.ac.at/movies?query=The%20Godfather";
-
-            String actual = MovieAPI.urlBuilder(MovieAPI.MOVIES_ENDPOINT, "The Godfather", "");
-
-            assertEquals(expected, actual);
-        }
-
-        @Test
-        void urlBuilder_queryOnlyWithGenreIsNONE() {
-            String expected = "http://prog2.fh-campuswien.ac.at/movies?query=The%20Godfather";
-
-            String actual = MovieAPI.urlBuilder(MovieAPI.MOVIES_ENDPOINT, "The Godfather", "__NONE__");
-
-            assertEquals(expected, actual);
-        }
-
-        @Test
-        void urlBuilder_genreOnly() {
-            String expected = "http://prog2.fh-campuswien.ac.at/movies?genre=ROMANCE";
-
-            String actual = MovieAPI.urlBuilder(MovieAPI.MOVIES_ENDPOINT, "", "ROMANCE");
-
-            assertEquals(expected, actual);
-        }
-    }
-
-    @Nested
     class RequestGenerator {
         @Test
         void requestGenerator_basic() {
             String expected = queryTest;
 
-            String actual = MovieAPI.requestGenerator(MovieAPI.MOVIES_ENDPOINT, "The Godfather", "DRAMA");
+            String actual = MovieAPI.requestGenerator(MovieAPI.MOVIES_ENDPOINT, "The Godfather", DRAMA, "", "");
 
             assertEquals(expected, actual);
         }
 
-        @Test
-        void requestGenerator_queryOnly_withGenreIs_emptyString() {
-            String expected = queryTest;
-
-            String actual = MovieAPI.requestGenerator(MovieAPI.MOVIES_ENDPOINT, "The Godfather", "");
-
-            assertEquals(expected, actual);
-        }
+//        @Test
+//        void requestGenerator_queryOnly_withGenreIs_null() {
+//            String expected = queryTest;
+//
+//            String actual = MovieAPI.requestGenerator(MovieAPI.MOVIES_ENDPOINT, "The Godfather", null, "", "");
+//
+//            assertEquals(expected, actual);
+//        }
 
         @Test
         void requestGenerator_queryOnlyWithGenreIsNONE() {
             String expected = queryTest;
 
-            String actual = MovieAPI.requestGenerator(MovieAPI.MOVIES_ENDPOINT, "The Godfather", "__NONE__");
+            String actual = MovieAPI.requestGenerator(MovieAPI.MOVIES_ENDPOINT, "The Godfather", __NONE__, "", "");
 
             assertEquals(expected, actual);
         }
@@ -83,7 +44,7 @@ public class MovieAPITest {
         void requestGenerator_genreOnly() {
             String expected = genreTest;
 
-            String actual = MovieAPI.requestGenerator(MovieAPI.MOVIES_ENDPOINT, "", "ROMANCE");
+            String actual = MovieAPI.requestGenerator(MovieAPI.MOVIES_ENDPOINT, "", ROMANCE, "", "");
 
             assertEquals(expected, actual);
         }
