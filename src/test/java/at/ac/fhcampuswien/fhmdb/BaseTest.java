@@ -27,8 +27,6 @@ public class BaseTest {
         testMovies.add(new Movie("id4", "title4", EnumSet.of(__NONE__), 4444, "des4", "imgUrl4", 4, new String[]{"director41", "director42"}, new String[]{"writer41", "writer42"}, new String[]{"mainCast41", "mainCast41"}, 4));
         testMovies.add(new Movie("id5", "title5long", EnumSet.of(__NONE__), 5555, "des5", "imgUrl5", 5, new String[]{"director41", "director42"}, new String[]{"writer41", "writer42"}, new String[]{"mainCast41", "mainCast41"}, 5));
 
-        System.out.println(System.getProperty("user.dir"));
-
         jsonTest = importJson(System.getProperty("user.dir") + "\\target\\test-classes\\jsonTest.json");
         queryTest = importJson(System.getProperty("user.dir") + "\\target\\test-classes\\queryTest.json");
         genreTest = importJson(System.getProperty("user.dir") + "\\target\\test-classes\\genreTest.json");

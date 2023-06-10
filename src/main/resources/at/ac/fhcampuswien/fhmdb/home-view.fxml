@@ -33,7 +33,7 @@
         <padding>
             <Insets bottom="20.0" left="10.0" top="20.0"/>
         </padding>
-        <JFXButton fx:id="sortBtn" styleClass="background-yellow" stylesheets="@styles.css" text="Sort (asc)"
+        <JFXButton fx:id="sortBtn" styleClass="background-yellow" stylesheets="@styles.css" text="Unsorted"
                    minWidth="73"/>
         <TextField fx:id="searchField" prefHeight="25.0" prefWidth="170.0" promptText="Search FHMDb"/>
         <JFXComboBox fx:id="genreComboBox" focusColor="#f5c518" prefWidth="170.0" styleClass="filter-combo-box"

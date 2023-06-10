@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 import static at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre.__NONE__;
 
-public abstract class BaseController implements Initializable {
+public class BaseController implements Initializable {
     @FXML
     public JFXButton sortBtn;
     @FXML
@@ -42,10 +42,13 @@ public abstract class BaseController implements Initializable {
     public List<Movie> allMovies;
     public List<Movie> filteredMovies;
 
+    public Sorter sorter;
+
     public BaseController() {
         observableMovies = FXCollections.observableArrayList();
         allMovies = new ArrayList<>(Movie.initializeMovies());
         filteredMovies = new ArrayList<>(allMovies);
+        sorter = new Sorter(filteredMovies);
     }
 
     @Override
@@ -55,7 +58,8 @@ public abstract class BaseController implements Initializable {
 
         // sort button
         sortBtn.setOnAction(actionEvent -> {
-            sort_movies(filteredMovies);
+            sorter.state.onSort();
+            sortBtn.setText(sorter.state.getName());
             observableMovies.setAll(filteredMovies);
         });
 
@@ -143,30 +147,6 @@ public abstract class BaseController implements Initializable {
                 .filter(movie -> movie.releaseYear >= startYear && movie.releaseYear <= endYear)
                 .toList();
     }
-
-    public void sort_movies(List<Movie> movies) {
-        if (sortBtn.getText().equals("Sort (asc)")) {
-            sortBtn.setText("Sort (desc)");
-            sortAscending(movies);
-        } else {
-            sortBtn.setText("Sort (asc)");
-            sortDescending(movies);
-        }
-    }
-
-    protected void sortMoviesWithCurrent(List<Movie> movies) {
-        if (sortBtn.getText().equals("Sort (asc)")) { sortDescending(movies); } else { sortAscending(movies); }
-    }
-
-    protected void sortMoviesWithOther(List<Movie> movies) {
-        if (sortBtn.getText().equals("Sort (asc)")) { sortDescending(movies); } else { sortAscending(movies); }
-    }
-
-    protected void sortAscending(List<Movie> movies) {
-        movies.sort(Comparator.comparing(Movie::getTitle));
-    }
-
-    protected void sortDescending(List<Movie> movies) { movies.sort(Comparator.comparing(Movie::getTitle).reversed()); }
 
     public static void notifyUser(Exception e, Alert.AlertType type) {
         Alert userAlert = new Alert(type);
