@@ -1,20 +1,23 @@
 package at.ac.fhcampuswien.fhmdb.DataLayer;
 
+import at.ac.fhcampuswien.fhmdb.LogicLayer.observer.IObservable;
+import at.ac.fhcampuswien.fhmdb.LogicLayer.observer.IObserver;
 import at.ac.fhcampuswien.fhmdb.exceptions.DatabaseException;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class WatchlistRepository {
+public class WatchlistRepository implements IObservable {
     private static WatchlistRepository _instance;
     private WatchlistRepository() { this.dao = Database.getDatabase().getWatchlistDao(); }
-
     public static WatchlistRepository getInstance() {
         if (_instance == null) _instance = new WatchlistRepository();
         return _instance;
     }
 
+    private final List<IObserver> observers = new ArrayList<>();
     private final Dao<WatchlistEntity, Long> dao;
 
     public List<WatchlistEntity> getAll() {
@@ -44,8 +47,6 @@ public class WatchlistRepository {
             }
             dao.create(movie);
 
-            //            if(checkIfExists(movie) != null) throw new DatabaseException("Movie is already watchlisted!");
-//            dao.create(checkIfExists(movie));
         } catch (SQLException sqle) {
             throw new DatabaseException("dbError on add", sqle);
         }
@@ -59,5 +60,13 @@ public class WatchlistRepository {
         } catch (SQLException sqle) {
             throw new DatabaseException("dbError on remove", sqle);
         }
+    }
+    @Override
+    public void add(IObserver observer) { observers.add(observer); }
+    @Override
+    public void remove(IObserver observer) { observers.remove(observer); }
+    @Override
+    public void notifyObservers() {
+        observers.forEach(IObserver::update);
     }
 }

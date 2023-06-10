@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.fhmdb;
 
+import at.ac.fhcampuswien.fhmdb.LogicLayer.model.ControllerFactory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,7 +14,9 @@ public class FhmdbApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        ControllerFactory myFactory = new ControllerFactory();
         FXMLLoader mainLoader = new FXMLLoader(FhmdbApplication.class.getResource("main-view.fxml"));
+        mainLoader.setControllerFactory(myFactory);
 
         Scene mainScene = new Scene(mainLoader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
 

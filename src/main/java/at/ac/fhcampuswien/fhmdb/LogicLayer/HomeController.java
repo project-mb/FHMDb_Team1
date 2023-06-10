@@ -4,6 +4,7 @@ import at.ac.fhcampuswien.fhmdb.DataLayer.WatchlistEntity;
 import at.ac.fhcampuswien.fhmdb.DataLayer.WatchlistRepository;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.ClickEventHandler;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
+import at.ac.fhcampuswien.fhmdb.LogicLayer.observer.IObserver;
 import at.ac.fhcampuswien.fhmdb.PresentationLayer.MovieCell;
 import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
 import at.ac.fhcampuswien.fhmdb.exceptions.DatabaseException;
@@ -13,8 +14,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class HomeController extends BaseController {
-    public HomeController() { super(); }
+public class HomeController extends BaseController implements IObserver {
+    private static HomeController _instance;
+    private HomeController() { super(); }
+    public static HomeController getInstance() {
+        if (_instance == null) _instance = new HomeController();
+        return _instance;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -47,4 +53,8 @@ public class HomeController extends BaseController {
         }
 
     };
+    @Override
+    public void update() {
+
+    }
 }

@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 import static at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre.__NONE__;
 
-public class BaseController implements Initializable {
+public abstract class BaseController implements Initializable {
     @FXML
     public JFXButton sortBtn;
     @FXML
@@ -38,9 +38,15 @@ public class BaseController implements Initializable {
     @FXML
     public JFXListView<Movie> movieListView;
 
-    public final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
-    public List<Movie> allMovies = new ArrayList<>(Movie.initializeMovies());
-    public List<Movie> filteredMovies = new ArrayList<>(Movie.initializeMovies());
+    public final ObservableList<Movie> observableMovies;
+    public List<Movie> allMovies;
+    public List<Movie> filteredMovies;
+
+    public BaseController() {
+        observableMovies = FXCollections.observableArrayList();
+        allMovies = new ArrayList<>(Movie.initializeMovies());
+        filteredMovies = new ArrayList<>(allMovies);
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

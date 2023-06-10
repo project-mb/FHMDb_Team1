@@ -4,6 +4,7 @@ import at.ac.fhcampuswien.fhmdb.DataLayer.WatchlistEntity;
 import at.ac.fhcampuswien.fhmdb.DataLayer.WatchlistRepository;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.ClickEventHandler;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
+import at.ac.fhcampuswien.fhmdb.LogicLayer.observer.IObserver;
 import at.ac.fhcampuswien.fhmdb.PresentationLayer.MovieCell;
 import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
 import at.ac.fhcampuswien.fhmdb.exceptions.DatabaseException;
@@ -14,10 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class WatchlistController extends BaseController {
-    public List<Movie> watchlistMovies = new ArrayList<>();
-    public WatchlistController() { super(); }
+public class WatchlistController extends BaseController implements IObserver {
+    private static WatchlistController _instance;
+    private WatchlistController() { super(); }
+    public static WatchlistController getInstance() {
+        if (_instance == null) _instance = new WatchlistController();
+        return _instance;
+    }
 
+    public List<Movie> watchlistMovies = new ArrayList<>();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
@@ -54,4 +60,8 @@ public class WatchlistController extends BaseController {
             notifyUser(dbe, Alert.AlertType.ERROR);
         }
     };
+    @Override
+    public void update() {
+
+    }
 }

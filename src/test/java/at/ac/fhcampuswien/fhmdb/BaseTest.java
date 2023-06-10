@@ -14,7 +14,7 @@ import static at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre.*;
 
 public class BaseTest {
     public static final List<Movie> testMovies = new ArrayList<>();
-    public static final HomeController testController = new HomeController();
+    public static final HomeController testController = HomeController.getInstance();
     public static final String queryTest;
     public static final String genreTest;
     public static final String jsonTest;
