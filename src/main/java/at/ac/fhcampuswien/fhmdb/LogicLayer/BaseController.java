@@ -1,7 +1,9 @@
 package at.ac.fhcampuswien.fhmdb.LogicLayer;
 
+import at.ac.fhcampuswien.fhmdb.LogicLayer.State.Sorter;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
+import at.ac.fhcampuswien.fhmdb.LogicLayer.observer.IObserver;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
@@ -20,7 +22,7 @@ import java.util.stream.Collectors;
 
 import static at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre.__NONE__;
 
-public class BaseController implements Initializable {
+public abstract class BaseController implements Initializable, IObserver {
     @FXML
     public JFXButton sortBtn;
     @FXML
@@ -38,17 +40,14 @@ public class BaseController implements Initializable {
     @FXML
     public JFXListView<Movie> movieListView;
 
-    public final ObservableList<Movie> observableMovies;
-    public List<Movie> allMovies;
-    public List<Movie> filteredMovies;
+    protected ObservableList<Movie> observableMovies;
+    protected List<Movie> allMovies;
 
-    public Sorter sorter;
+    private final Sorter sorter;
 
     public BaseController() {
         observableMovies = FXCollections.observableArrayList();
-        allMovies = new ArrayList<>(Movie.initializeMovies());
-        filteredMovies = new ArrayList<>(allMovies);
-        sorter = new Sorter(filteredMovies);
+        sorter = new Sorter(observableMovies);
     }
 
     @Override
@@ -56,11 +55,13 @@ public class BaseController implements Initializable {
         genreComboBox.getItems().addAll(Genre.values());
         genreComboBox.setValue(__NONE__);
 
+        observableMovies.addAll(allMovies);
+        movieListView.setItems(observableMovies);   // set data of observable list to list view
+
         // sort button
         sortBtn.setOnAction(actionEvent -> {
             sorter.state.onSort();
             sortBtn.setText(sorter.state.getName());
-            observableMovies.setAll(filteredMovies);
         });
 
         releaseYearText.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -81,12 +82,29 @@ public class BaseController implements Initializable {
             String temp = String.format("%.4s", String.format("%2.1f", (double) newValue));
             ratingLable.textProperty().setValue(temp);
         });
+
+        filterBtn.setOnAction(actionEvent -> {
+            setMovies();
+//            if(!releaseYearText.getText().equals("")){
+//                if(releaseYearText.getText().contains("-")){
+//
+//                }
+//            }
+            int rlyf = (releaseYearText.getText().equals("")) ? 0 : Integer.parseInt(releaseYearText.getText());
+            observableMovies.setAll(getMoviesFiltered(allMovies, searchField.getText(), genreComboBox.getValue(), rlyf, ratingSlider.getValue()));
+            sorter.setMovieList(observableMovies);
+            sorter.state.onCurrent();
+        });
     }
 
-    public List<Movie> getMoviesFiltered(List<Movie> moviesToFilter, String searchQuery, Genre genreFilter, int releaseYearFilter, int ratingFilter) {
+    protected abstract void setMovies();
+
+    public List<Movie> getMoviesFiltered(List<Movie> moviesToFilter, String searchQuery, Genre genreFilter, int releaseYearFilter, double ratingFilter) {
         List<Movie> filteredByRating = getMoviesByRating(moviesToFilter, ratingFilter);
         List<Movie> filteredByReleaseYear = getMoviesByReleaseYear(filteredByRating, releaseYearFilter);
         List<Movie> filteredByGenre = getMoviesByGenre(filteredByReleaseYear, genreFilter);
+
+        System.out.println("Filter: " + searchQuery + "/" + genreFilter.name() + "/" + releaseYearFilter + "/" + ratingFilter);
 
         return getMoviesByTitle(searchQuery, filteredByGenre);
     }
@@ -108,7 +126,7 @@ public class BaseController implements Initializable {
         if (releaseYear == 0) return movies;
         return movies.stream().filter(movie -> movie.releaseYear == releaseYear).toList();
     }
-    protected static List<Movie> getMoviesByRating(List<Movie> movies, int rating) {
+    protected static List<Movie> getMoviesByRating(List<Movie> movies, double rating) {
         if (rating == 0) return movies;
         return movies.stream().filter(movie -> movie.rating == rating).toList();
     }

@@ -4,7 +4,6 @@ import at.ac.fhcampuswien.fhmdb.DataLayer.WatchlistEntity;
 import at.ac.fhcampuswien.fhmdb.DataLayer.WatchlistRepository;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.ClickEventHandler;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
-import at.ac.fhcampuswien.fhmdb.LogicLayer.observer.IObserver;
 import at.ac.fhcampuswien.fhmdb.PresentationLayer.MovieCell;
 import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
 import at.ac.fhcampuswien.fhmdb.exceptions.DatabaseException;
@@ -14,9 +13,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class HomeController extends BaseController implements IObserver {
+public class HomeController extends BaseController {
     private static HomeController _instance;
-    private HomeController() { super(); }
+    private HomeController() {
+        super();
+        allMovies = new ArrayList<>(Movie.initializeMovies());
+    }
     public static HomeController getInstance() {
         if (_instance == null) _instance = new HomeController();
         return _instance;
@@ -26,24 +28,14 @@ public class HomeController extends BaseController implements IObserver {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
 
-        observableMovies.addAll(allMovies);
-
-        movieListView.setItems(observableMovies);   // set data of observable list to list view
         movieListView.setCellFactory(movieListView -> new MovieCell(onClicked_addToWatchlist, "Watchlist")); // use custom cell factory to display data
-
-        // filter button
-        filterBtn.setOnAction(actionEvent -> {
-            var test = MovieAPI.get(MovieAPI.MOVIES_ENDPOINT, searchField.getText(), genreComboBox.getValue());
-            if (test != null) allMovies = test;
-
-            filteredMovies = new ArrayList<>(getMoviesFiltered(allMovies, searchField.getText(), genreComboBox.getValue(), 0, 0));
-            sorter.setMovieList(filteredMovies);
-            sorter.state.onCurrent();
-            observableMovies.setAll(filteredMovies);
-            movieListView.setCellFactory(movieListView -> new MovieCell(onClicked_addToWatchlist, "Watchlist"));
-        });
     }
 
+    @Override
+    protected void setMovies() {
+        var test = MovieAPI.get(MovieAPI.MOVIES_ENDPOINT, searchField.getText(), genreComboBox.getValue());
+        if (test != null) allMovies = test;
+    }
     private final ClickEventHandler<Movie> onClicked_addToWatchlist = (clickedMovie) -> {
         try {
             WatchlistRepository wrap = WatchlistRepository.getInstance();
@@ -51,7 +43,6 @@ public class HomeController extends BaseController implements IObserver {
         } catch (DatabaseException dbe) {
             notifyUser(dbe, Alert.AlertType.ERROR);
         }
-
     };
     @Override
     public void update() {
