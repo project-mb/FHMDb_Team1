@@ -20,7 +20,7 @@ public class URLBuilderTest {
 
     @Test
     void urlBuilder_queryOnlyWithGenreIsEmptyString() {
-        String expected = "http://prog2.fh-campuswien.ac.at/movies?query=The%20Godfather&genre=";
+        String expected = "http://prog2.fh-campuswien.ac.at/movies?query=The%20Godfather";
 
         String actual = new URLBuilder()
                 .requestURL(MovieAPI.MOVIES_ENDPOINT)

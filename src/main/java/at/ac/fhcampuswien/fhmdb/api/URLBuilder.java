@@ -21,7 +21,7 @@ public final class URLBuilder {
         return this;
     }
     public URLBuilder genre(String genre) {
-        if(!genre.equals("__NONE__")) {
+        if(!genre.equals("__NONE__") && !genre.equals("")) {
             this.genre = "&genre=" + genre;
         }
         return this;
