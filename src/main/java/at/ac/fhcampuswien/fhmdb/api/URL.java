@@ -18,8 +18,6 @@ public class URL {
 
     @Override
     public String toString() {
-        String str = requestURL + (query.replaceAll(" ", "%20") + genre + releaseYear + rating).replaceFirst("&", "?");
-        System.out.println(str);
-        return str;
+        return requestURL + (query.replaceAll(" ", "%20") + genre + releaseYear + rating).replaceFirst("&", "?");
     }
 }

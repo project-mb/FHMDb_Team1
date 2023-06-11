@@ -11,10 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.util.*;
@@ -43,22 +40,23 @@ public abstract class BaseController implements Initializable, IObserver {
     protected ObservableList<Movie> observableMovies;
     protected List<Movie> allMovies;
 
-    private final Sorter sorter;
+    protected final Sorter sorter;
 
     public BaseController() {
+        allMovies = new ArrayList<>();
         observableMovies = FXCollections.observableArrayList();
         sorter = new Sorter(observableMovies);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        genreComboBox.getItems().addAll(Genre.values());
+        genreComboBox.getItems().setAll(Genre.values());
         genreComboBox.setValue(__NONE__);
 
-        observableMovies.addAll(allMovies);
-        movieListView.setItems(observableMovies);   // set data of observable list to list view
+        setMovies();
+        observableMovies.setAll(allMovies);
+        movieListView.setItems(observableMovies);
 
-        // sort button
         sortBtn.setOnAction(actionEvent -> {
             sorter.state.onSort();
             sortBtn.setText(sorter.state.getName());
@@ -83,28 +81,26 @@ public abstract class BaseController implements Initializable, IObserver {
             ratingLable.textProperty().setValue(temp);
         });
 
-        filterBtn.setOnAction(actionEvent -> {
-            setMovies();
-//            if(!releaseYearText.getText().equals("")){
-//                if(releaseYearText.getText().contains("-")){
-//
-//                }
-//            }
-            int rlyf = (releaseYearText.getText().equals("")) ? 0 : Integer.parseInt(releaseYearText.getText());
-            observableMovies.setAll(getMoviesFiltered(allMovies, searchField.getText(), genreComboBox.getValue(), rlyf, ratingSlider.getValue()));
-            sorter.setMovieList(observableMovies);
-            sorter.state.onCurrent();
-        });
+        filterBtn.setOnAction(actionEvent -> updateView());
+    }
+
+    protected void updateView() {
+        setMoviesFilteredWithCurrent();
+        sorter.setMovieList(observableMovies);
+        sorter.state.onCurrent();
     }
 
     protected abstract void setMovies();
 
+    protected void setMoviesFilteredWithCurrent() {
+        setMovies();
+        int rlyf = (releaseYearText.getText().equals("")) ? 0 : Integer.parseInt(releaseYearText.getText());
+        observableMovies.setAll(getMoviesFiltered(allMovies, searchField.getText(), genreComboBox.getValue(), rlyf, ratingSlider.getValue()));
+    }
     public List<Movie> getMoviesFiltered(List<Movie> moviesToFilter, String searchQuery, Genre genreFilter, int releaseYearFilter, double ratingFilter) {
         List<Movie> filteredByRating = getMoviesByRating(moviesToFilter, ratingFilter);
         List<Movie> filteredByReleaseYear = getMoviesByReleaseYear(filteredByRating, releaseYearFilter);
         List<Movie> filteredByGenre = getMoviesByGenre(filteredByReleaseYear, genreFilter);
-
-        System.out.println("Filter: " + searchQuery + "/" + genreFilter.name() + "/" + releaseYearFilter + "/" + ratingFilter);
 
         return getMoviesByTitle(searchQuery, filteredByGenre);
     }
@@ -166,10 +162,18 @@ public abstract class BaseController implements Initializable, IObserver {
                 .toList();
     }
 
-    public static void notifyUser(Exception e, Alert.AlertType type) {
+//    public static void notifyUser(String title, String content, Alert.AlertType type, Exception e) {
+//        notifyUser(title, content + "\n\n" + e.getMessage(), type);
+//    }
+    public static void notifyUser(Alert.AlertType type, Exception e) {
+        notifyUser("", e.getMessage(), type);
+    }
+    public static void notifyUser(String title, String content, Alert.AlertType type) {
         Alert userAlert = new Alert(type);
-        userAlert.setTitle("!Error (notify admin)");
-        userAlert.setContentText(String.valueOf(e));
+        if (type == Alert.AlertType.NONE) userAlert.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        if (type == Alert.AlertType.ERROR) title = "!Error (notify admin)";
+        userAlert.setTitle(title);
+        userAlert.setContentText(content);
         userAlert.showAndWait();
     }
 }

@@ -19,7 +19,6 @@ public class Database {
     private static Database instance;
 
     private Database() throws DatabaseException {
-
         try {
             connectionSource = createConnectionSource();
             this.dao = DaoManager.createDao(connectionSource, WatchlistEntity.class);
