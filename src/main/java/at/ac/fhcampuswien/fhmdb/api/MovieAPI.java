@@ -3,7 +3,6 @@ package at.ac.fhcampuswien.fhmdb.api;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
 import com.google.gson.Gson;
-import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -17,25 +16,6 @@ public class MovieAPI {
 
     public static List<Movie> get(String requestURL, String query, Genre genre) { return responseParser(requestGenerator(requestURL, query, genre, "", "")); }
     public static List<Movie> get(String requestURL) { return responseParser(requestGenerator(requestURL, "", Genre.__NONE__, "", "")); }
-
-    /*public static String urlBuilder(String requestURL, String query, String genre, String releaseYear, String ratingFrom){
-
-
-        if (!query.equals("")) {
-            urlBuilder.query(query);
-        }
-        if (!genre.equals("") && !genre.equals("__NONE__")) {
-            urlBuilder.genre(genre);
-        }
-        if (!releaseYear.equals("")) {
-            urlBuilder.releaseYear(releaseYear);
-        }
-        if (!ratingFrom.equals("")) {
-            urlBuilder.ratingFrom(ratingFrom);
-        }
-
-        return urlBuilder.build().toString();
-    }*/
 
     protected static String requestGenerator(String requestURL, String query, Genre genre, String releaseYear, String ratingFrom) {
         OkHttpClient client = new OkHttpClient();

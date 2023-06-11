@@ -1,7 +1,5 @@
 package at.ac.fhcampuswien.fhmdb.api;
 
-import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre;
-
 import java.util.Objects;
 
 public final class URLBuilder {

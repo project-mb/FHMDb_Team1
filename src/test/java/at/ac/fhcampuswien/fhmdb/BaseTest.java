@@ -2,8 +2,6 @@ package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.LogicLayer.HomeController;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
-import javafx.scene.control.Alert;
-import org.junit.jupiter.api.parallel.Resources;
 
 import java.io.IOException;
 import java.nio.file.Files;

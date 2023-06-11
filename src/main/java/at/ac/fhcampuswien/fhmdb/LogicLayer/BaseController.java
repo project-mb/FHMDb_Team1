@@ -1,7 +1,6 @@
 package at.ac.fhcampuswien.fhmdb.LogicLayer;
 
 import at.ac.fhcampuswien.fhmdb.LogicLayer.State.Sorter;
-import at.ac.fhcampuswien.fhmdb.LogicLayer.State.Unsorted;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
 import com.jfoenix.controls.JFXButton;
@@ -15,11 +14,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
-
 import static at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre.__NONE__;
 
 public class BaseController implements Initializable {

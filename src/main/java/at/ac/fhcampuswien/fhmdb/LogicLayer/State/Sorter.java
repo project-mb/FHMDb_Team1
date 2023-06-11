@@ -1,6 +1,4 @@
 package at.ac.fhcampuswien.fhmdb.LogicLayer.State;
-
-//import at.ac.fhcampuswien.fhmdb.LogicLayer.BaseController;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
 
 import java.util.Comparator;
