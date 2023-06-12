@@ -14,6 +14,7 @@ public class FhmdbApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader mainLoader = new FXMLLoader(FhmdbApplication.class.getResource("main-view.fxml"));
+        mainLoader.setControllerFactory(new ControllerFactory());
 
         Scene mainScene = new Scene(mainLoader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
 

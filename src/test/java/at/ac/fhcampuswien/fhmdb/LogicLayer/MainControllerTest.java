@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class HomeControllerTest {
+public class MainControllerTest {
     @Test
-    void homeController_is_singleton() {
-        HomeController expected = HomeController.getInstance();
+    void mainController_is_singleton() {
+        MainController expected = MainController.getInstance();
 
-        HomeController actual = HomeController.getInstance();
+        MainController actual = MainController.getInstance();
 
         assertEquals(expected, actual);
     }

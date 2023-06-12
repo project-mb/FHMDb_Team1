@@ -12,8 +12,10 @@ module at.ac.fhcampuswien.fhmdb {
     requires java.sql;
 
     exports at.ac.fhcampuswien.fhmdb;
-    exports at.ac.fhcampuswien.fhmdb.LogicLayer.model;
     exports at.ac.fhcampuswien.fhmdb.LogicLayer;
+    exports at.ac.fhcampuswien.fhmdb.LogicLayer.model;
+    exports at.ac.fhcampuswien.fhmdb.LogicLayer.observer;
+    exports at.ac.fhcampuswien.fhmdb.LogicLayer.State;
     exports at.ac.fhcampuswien.fhmdb.DataLayer;
     exports at.ac.fhcampuswien.fhmdb.exceptions;
     exports at.ac.fhcampuswien.fhmdb.PresentationLayer;

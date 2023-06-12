@@ -1,9 +1,10 @@
 package at.ac.fhcampuswien.fhmdb.PresentationLayer;
 
+import at.ac.fhcampuswien.fhmdb.LogicLayer.BaseController;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.ClickEventHandler;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
-import com.jfoenix.controls.JFXButton;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -21,10 +22,10 @@ public class MovieCell extends ListCell<Movie> {
     private final Region blank = new Region();
     private final HBox layoutHorizontal = new HBox(title, blank, showDetails, bt_setWatchlist);
     private final VBox layout = new VBox(layoutHorizontal, detail, genres);
-    public MovieCell(ClickEventHandler onClicked_addToWatchlist, String remove) {
+    public MovieCell(ClickEventHandler<Movie> onClicked_addToWatchlist, String bt_setWatchlist_text) {
         super();
         bt_setWatchlist.setOnMouseClicked(mouseEvent -> onClicked_addToWatchlist.onCLick(getItem()));
-        bt_setWatchlist.setText(remove);
+        bt_setWatchlist.setText(bt_setWatchlist_text);
     }
 
     @Override
@@ -42,8 +43,15 @@ public class MovieCell extends ListCell<Movie> {
                             ? movie.description
                             : "No description available"
             );
-            genres.setText(movie.genres.toString().replaceAll("\\[|]|,", ""));
+            genres.setText(movie.genres.toString().replaceAll("[\\[\\],]", ""));
 
+            showDetails.setOnAction(event -> {
+                BaseController.notifyUser("Details",
+                        title.getText() + "\n" +
+                                genres.getText() + "\n\n" +
+                                detail.getText()
+                        , Alert.AlertType.NONE);
+            });
 
             // color scheme
             title.getStyleClass().add("text-yellow");

@@ -19,7 +19,6 @@ public class Database {
     private static Database instance;
 
     private Database() throws DatabaseException {
-
         try {
             connectionSource = createConnectionSource();
             this.dao = DaoManager.createDao(connectionSource, WatchlistEntity.class);
@@ -33,7 +32,7 @@ public class Database {
 
     public ConnectionSource getConnectionSource() { return connectionSource; }
 
-    public static Database getDatabase() {
+    public static Database getInstance() {
         return (instance == null) ? instance = new Database() : instance;
     }
 

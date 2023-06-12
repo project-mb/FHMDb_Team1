@@ -4,47 +4,51 @@ import at.ac.fhcampuswien.fhmdb.DataLayer.WatchlistEntity;
 import at.ac.fhcampuswien.fhmdb.DataLayer.WatchlistRepository;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.ClickEventHandler;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
+import at.ac.fhcampuswien.fhmdb.LogicLayer.observer.ObserverEvent;
 import at.ac.fhcampuswien.fhmdb.PresentationLayer.MovieCell;
 import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
 import at.ac.fhcampuswien.fhmdb.exceptions.DatabaseException;
 import javafx.scene.control.Alert;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class HomeController extends BaseController {
-    public HomeController() { super(); }
+    private static HomeController _instance;
+    private HomeController() {
+        super();
+        WatchlistRepository.getInstance().add(this, ObserverEvent.ADD);
+    }
+    public static HomeController getInstance() {
+        if (_instance == null) _instance = new HomeController();
+        return _instance;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
 
-        observableMovies.addAll(allMovies);
-
-        movieListView.setItems(observableMovies);   // set data of observable list to list view
-        movieListView.setCellFactory(movieListView -> new MovieCell(onClicked_addToWatchlist, "Watchlist")); // use custom cell factory to display data
-
-        // filter button
-        filterBtn.setOnAction(actionEvent -> {
-            var test = MovieAPI.get(MovieAPI.MOVIES_ENDPOINT, searchField.getText(), genreComboBox.getValue());
-            if (test != null) allMovies = test;
-
-            filteredMovies = new ArrayList<>(getMoviesFiltered(allMovies, searchField.getText(), genreComboBox.getValue(), 0, 0));
-            sorter.setMovieList(filteredMovies);
-            sorter.state.onCurrent();
-            observableMovies.setAll(filteredMovies);
-            movieListView.setCellFactory(movieListView -> new MovieCell(onClicked_addToWatchlist, "Watchlist"));
-        });
+        movieListView.setCellFactory(movieListView -> new MovieCell(onClicked_addToWatchlist, "Watchlist"));
     }
 
+    @Override
+    protected void setMovies() {
+        var test = MovieAPI.get(MovieAPI.MOVIES_ENDPOINT, searchField.getText(), genreComboBox.getValue(), releaseYearText.getText(), ratingLable.getText());
+        if (test != null) allMovies = test;
+        else allMovies = Movie.initializeMovies();
+    }
     private final ClickEventHandler<Movie> onClicked_addToWatchlist = (clickedMovie) -> {
         try {
-            WatchlistRepository wrap = new WatchlistRepository();
+            WatchlistRepository wrap = WatchlistRepository.getInstance();
             wrap.addToWatchlist(new WatchlistEntity(clickedMovie));
         } catch (DatabaseException dbe) {
-            notifyUser(dbe, Alert.AlertType.ERROR);
+            notifyUser(Alert.AlertType.ERROR, dbe);
         }
-
     };
+
+    @Override
+    public void update(ObserverEvent event, WatchlistEntity movie) {
+        if (movie != null) notifyUser("Update", "\"" + movie.title + "\" successfully added to watchlist!", Alert.AlertType.NONE);
+        else notifyUser("Update", "Movie already on watchlist!", Alert.AlertType.INFORMATION);
+    }
 }

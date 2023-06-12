@@ -15,26 +15,26 @@ public final class URLBuilder {
         return this;
     }
     public URLBuilder query(String query) {
-        if(!query.equals("")) {
+        if (!query.equals("")) {
             this.query = "&query=" + query;
         }
         return this;
     }
     public URLBuilder genre(String genre) {
-        if(!genre.equals("__NONE__") && !genre.equals("")) {
+        if (!genre.equals("__NONE__") && !genre.equals("")) {
             this.genre = "&genre=" + genre;
         }
         return this;
     }
     public URLBuilder releaseYear(String releaseYear) {
-        if(!releaseYear.equals("")) {
+        if (!releaseYear.equals("")) {
             this.releaseYear = "&releaseYear=" + releaseYear;
         }
         return this;
     }
     public URLBuilder ratingFrom(String ratingFrom) {
-        if(!ratingFrom.equals("")) {
-            this.ratingFrom = "&rating=" + ratingFrom;
+        if (!ratingFrom.equals("") && !ratingFrom.replace(',', '.').equals("0.0")) {
+            this.ratingFrom = "&ratingFrom=" + ratingFrom.replace(',', '.');
         }
         return this;
     }

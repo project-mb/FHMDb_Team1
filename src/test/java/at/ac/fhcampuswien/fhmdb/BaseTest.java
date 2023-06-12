@@ -17,7 +17,7 @@ public class BaseTest {
     public static final List<Movie> testMovies = new ArrayList<>();
     public static final List<Movie> testMoviesAscending = new ArrayList<>();
     public static final List<Movie> testMoviesDescending = new ArrayList<>();
-    public static final HomeController testController = new HomeController();
+    public static final HomeController testController = HomeController.getInstance();
     public static final String queryTest;
     public static final String genreTest;
     public static final String jsonTest;
@@ -40,7 +40,7 @@ public class BaseTest {
         genreTest = importJson(System.getProperty("user.dir") + "\\target\\test-classes\\genreTest.json");
     }
 
-    private static String importJson(String path){
+    private static String importJson(String path) {
         try {
             return new String(Files.readAllBytes(Paths.get(path)));
         } catch (IOException e) {
