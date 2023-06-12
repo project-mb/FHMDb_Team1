@@ -86,7 +86,7 @@ public class URLBuilderTest {
 
     @Test
     void URLBuilder_ratingFromOnly() {
-        String expected = "http://prog2.fh-campuswien.ac.at/movies?rating=8";
+        String expected = "http://prog2.fh-campuswien.ac.at/movies?ratingFrom=8";
 
         String actual = new URLBuilder()
                 .requestURL(MovieAPI.MOVIES_ENDPOINT)
