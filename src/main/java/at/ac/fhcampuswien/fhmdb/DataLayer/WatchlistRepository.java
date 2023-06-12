@@ -12,7 +12,7 @@ import java.util.*;
 public class WatchlistRepository implements IObservable {
     private static WatchlistRepository _instance;
     private WatchlistRepository() {
-        this.dao = Database.getDatabase().getWatchlistDao();
+        this.dao = Database.getInstance().getWatchlistDao();
         this.observers = new HashMap<>();
         Arrays.stream(ObserverEvent.values()).forEach(event -> this.observers.put(event, new ArrayList<>()));
     }

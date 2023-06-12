@@ -32,7 +32,7 @@ public class Database {
 
     public ConnectionSource getConnectionSource() { return connectionSource; }
 
-    public static Database getDatabase() {
+    public static Database getInstance() {
         return (instance == null) ? instance = new Database() : instance;
     }
 

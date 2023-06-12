@@ -5,7 +5,6 @@ import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.Objects;
 
@@ -56,13 +55,16 @@ public class WatchlistEntity {
     public double getRating() { return rating; }
 
     public String genresToString(EnumSet<Genre> genres) {
+        if (genres == null) return "";
+
         StringBuilder out = new StringBuilder();
 
         for (Genre genre : genres) {
+            if (genre == Genre.__NONE__) continue;
             out.append(genre.toString()).append(",");
         }
 
-        out.deleteCharAt(out.length() - 1);
+        if (out.toString().contains(",")) out.deleteCharAt(out.length() - 1);
 
         return out.toString();
     }
