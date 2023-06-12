@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.fhmdb.LogicLayer;
 
+import at.ac.fhcampuswien.fhmdb.LogicLayer.State.Sorter;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
 import com.jfoenix.controls.JFXButton;
@@ -13,11 +14,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
-
 import static at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre.__NONE__;
 
 public class BaseController implements Initializable {
@@ -41,6 +40,7 @@ public class BaseController implements Initializable {
     public final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
     public List<Movie> allMovies = new ArrayList<>(Movie.initializeMovies());
     public List<Movie> filteredMovies = new ArrayList<>(Movie.initializeMovies());
+    public Sorter sorter = new Sorter(filteredMovies);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -49,7 +49,8 @@ public class BaseController implements Initializable {
 
         // sort button
         sortBtn.setOnAction(actionEvent -> {
-            sort_movies(filteredMovies);
+            sorter.state.onSort();
+            sortBtn.setText(sorter.state.getName());
             observableMovies.setAll(filteredMovies);
         });
 
@@ -137,30 +138,6 @@ public class BaseController implements Initializable {
                 .filter(movie -> movie.releaseYear >= startYear && movie.releaseYear <= endYear)
                 .toList();
     }
-
-    public void sort_movies(List<Movie> movies) {
-        if (sortBtn.getText().equals("Sort (asc)")) {
-            sortBtn.setText("Sort (desc)");
-            sortAscending(movies);
-        } else {
-            sortBtn.setText("Sort (asc)");
-            sortDescending(movies);
-        }
-    }
-
-    protected void sortMoviesWithCurrent(List<Movie> movies) {
-        if (sortBtn.getText().equals("Sort (asc)")) { sortDescending(movies); } else { sortAscending(movies); }
-    }
-
-    protected void sortMoviesWithOther(List<Movie> movies) {
-        if (sortBtn.getText().equals("Sort (asc)")) { sortDescending(movies); } else { sortAscending(movies); }
-    }
-
-    protected void sortAscending(List<Movie> movies) {
-        movies.sort(Comparator.comparing(Movie::getTitle));
-    }
-
-    protected void sortDescending(List<Movie> movies) { movies.sort(Comparator.comparing(Movie::getTitle).reversed()); }
 
     public static void notifyUser(Exception e, Alert.AlertType type) {
         Alert userAlert = new Alert(type);

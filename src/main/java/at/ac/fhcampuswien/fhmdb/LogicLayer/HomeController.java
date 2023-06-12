@@ -19,7 +19,6 @@ public class HomeController extends BaseController {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
-        sortMoviesWithOther(allMovies);
 
         observableMovies.addAll(allMovies);
 
@@ -28,11 +27,12 @@ public class HomeController extends BaseController {
 
         // filter button
         filterBtn.setOnAction(actionEvent -> {
-            var test = MovieAPI.get(MovieAPI.MOVIES_ENDPOINT, searchField.getText(), genreComboBox.getValue().toString());
+            var test = MovieAPI.get(MovieAPI.MOVIES_ENDPOINT, searchField.getText(), genreComboBox.getValue());
             if (test != null) allMovies = test;
 
             filteredMovies = new ArrayList<>(getMoviesFiltered(allMovies, searchField.getText(), genreComboBox.getValue(), 0, 0));
-            sortMoviesWithCurrent(filteredMovies);
+            sorter.setMovieList(filteredMovies);
+            sorter.state.onCurrent();
             observableMovies.setAll(filteredMovies);
             movieListView.setCellFactory(movieListView -> new MovieCell(onClicked_addToWatchlist, "Watchlist"));
         });

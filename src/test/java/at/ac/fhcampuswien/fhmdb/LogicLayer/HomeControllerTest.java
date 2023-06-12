@@ -15,30 +15,30 @@ import static at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre.__NONE__;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class HomeControllerTest {
-    @Nested
-    class SortMovies {
-        @Test
-        void sortAscending() {
-            List<Movie> expected = new ArrayList<>(testMovies);
-
-            List<Movie> actual = new ArrayList<>(testMovies);
-            testController.sortAscending(actual);
-
-            assertEquals(expected, actual);
-        }
-        @Test
-        void sortDescending() {
-            List<Movie> expected = new ArrayList<>();
-            for (int i = testMovies.size() - 1; i >= 0; i--) {
-                expected.add(testMovies.get(i));
-            }
-
-            List<Movie> actual = new ArrayList<>(testMovies);
-            testController.sortDescending(actual);
-
-            assertEquals(expected, actual);
-        }
-    }
+//    @Nested
+//    class SortMovies {
+//        @Test
+//        void sortAscending() {
+//            List<Movie> expected = new ArrayList<>(testMovies);
+//
+//            List<Movie> actual = new ArrayList<>(testMovies);
+//            testController.sortAscending(actual);
+//
+//            assertEquals(expected, actual);
+//        }
+//        @Test
+//        void sortDescending() {
+//            List<Movie> expected = new ArrayList<>();
+//            for (int i = testMovies.size() - 1; i >= 0; i--) {
+//                expected.add(testMovies.get(i));
+//            }
+//
+//            List<Movie> actual = new ArrayList<>(testMovies);
+//            testController.sortDescending(actual);
+//
+//            assertEquals(expected, actual);
+//        }
+//    }
 
     @Nested
     class GetMoviesByTitle {

@@ -8,8 +8,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class FhmdbApplication extends Application {
-    private static final int WINDOW_WIDTH = 2048;
-    private static final int WINDOW_HEIGHT = 1024;
+    private static final int WINDOW_WIDTH = 1024;
+    private static final int WINDOW_HEIGHT = 768;
 
     @Override
     public void start(Stage stage) throws IOException {
