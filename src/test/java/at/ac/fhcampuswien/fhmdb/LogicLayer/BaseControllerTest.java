@@ -46,7 +46,7 @@ public class BaseControllerTest {
         @Test
         public void getMoviesByGenre_basic() {
             List<Movie> expected = new ArrayList<>();
-            expected.add(testMovies.get(3));
+            expected.add(testMovies.get(4));
 
             List<Movie> actual = HomeController.getMoviesByGenre(testMovies, ADVENTURE);
 
@@ -75,7 +75,7 @@ public class BaseControllerTest {
         @Test
         public void getMoviesByReleaseYear_basic() {
             List<Movie> expected = new ArrayList<>();
-            expected.add(testMovies.get(1));
+            expected.add(testMovies.get(0));
 
             List<Movie> actual = HomeController.getMoviesByReleaseYear(testMovies, 1111);
 
@@ -217,7 +217,7 @@ public class BaseControllerTest {
         void getMoviesBetweenYears_basic() {
             List<Movie> expected = new ArrayList<>();
             expected.add(testMovies.get(2));
-            expected.add(testMovies.get(3));
+            expected.add(testMovies.get(4));
 
             List<Movie> actual = HomeController.getMoviesBetweenYears(testMovies, 2222, 3333);
 
@@ -272,7 +272,7 @@ public class BaseControllerTest {
         @Test
         void getMoviesBetweenYears_startYear_is_endYear() {
             List<Movie> expected = new ArrayList<>();
-            expected.add(testMovies.get(1));
+            expected.add(testMovies.get(0));
 
             List<Movie> actual = HomeController.getMoviesBetweenYears(testMovies, 1111, 1111);
 

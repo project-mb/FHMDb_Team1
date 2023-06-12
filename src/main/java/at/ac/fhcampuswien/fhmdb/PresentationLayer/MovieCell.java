@@ -1,8 +1,10 @@
 package at.ac.fhcampuswien.fhmdb.PresentationLayer;
 
+import at.ac.fhcampuswien.fhmdb.LogicLayer.BaseController;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.ClickEventHandler;
 import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Movie;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -43,6 +45,13 @@ public class MovieCell extends ListCell<Movie> {
             );
             genres.setText(movie.genres.toString().replaceAll("[\\[\\],]", ""));
 
+            showDetails.setOnAction(event -> {
+                BaseController.notifyUser("Details",
+                        title.getText() + "\n" +
+                                genres.getText() + "\n\n" +
+                                detail.getText()
+                        , Alert.AlertType.NONE);
+            });
 
             // color scheme
             title.getStyleClass().add("text-yellow");

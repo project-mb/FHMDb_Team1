@@ -11,10 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.util.*;
@@ -81,7 +78,7 @@ public abstract class BaseController implements Initializable, IObserver {
 
         ratingSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             String temp = String.format("%.4s", String.format("%2.1f", (double) newValue));
-            ratingLable.textProperty().setValue(temp);
+            ratingLable.textProperty().setValue(temp.replace(',', '.'));
         });
 
         filterBtn.setOnAction(actionEvent -> updateView());
