@@ -11,7 +11,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.util.*;
@@ -162,9 +165,6 @@ public abstract class BaseController implements Initializable, IObserver {
                 .toList();
     }
 
-//    public static void notifyUser(String title, String content, Alert.AlertType type, Exception e) {
-//        notifyUser(title, content + "\n\n" + e.getMessage(), type);
-//    }
     public static void notifyUser(Alert.AlertType type, Exception e) {
         notifyUser("", e.getMessage(), type);
     }

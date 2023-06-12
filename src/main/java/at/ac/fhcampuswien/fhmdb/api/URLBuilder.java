@@ -1,7 +1,5 @@
 package at.ac.fhcampuswien.fhmdb.api;
 
-import at.ac.fhcampuswien.fhmdb.LogicLayer.model.Genre;
-
 import java.util.Objects;
 
 public final class URLBuilder {
@@ -23,7 +21,7 @@ public final class URLBuilder {
         return this;
     }
     public URLBuilder genre(String genre) {
-        if(!genre.equals("__NONE__")) {
+        if(!genre.equals("__NONE__") && !genre.equals("")) {
             this.genre = "&genre=" + genre;
         }
         return this;
